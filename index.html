@@ -5,7 +5,6 @@
   <title>Logic Page</title>
 
   <style>
-    /* ================= PAGE ================= */
     body, html {
       margin: 0;
       padding: 0;
@@ -15,30 +14,19 @@
       background: black;
     }
 
-    /* ================= VIDEO BACKGROUND ================= */
-    .video-bg {
+    /* 🔥 PERFECT VIDEO FIT */
+    iframe {
       position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      overflow: hidden;
+      top: 50%;
+      left: 50%;
+      width: 177.77vh; /* 16:9 ratio */
+      height: 100vh;
+      transform: translate(-50%, -50%);
+      pointer-events: none;
       z-index: -1;
     }
 
-    .video-bg iframe {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      width: 100vw;
-      height: 56.25vw;
-      min-height: 100vh;
-      min-width: 177.77vh;
-      transform: translate(-50%, -50%);
-      pointer-events: none;
-    }
-
-    /* ================= CONTENT ================= */
+    /* 🔥 CONTENT */
     .content {
       position: relative;
       z-index: 1;
@@ -55,57 +43,22 @@
     p {
       font-size: 18px;
     }
-
-    /* ================= INPUT ================= */
-    .form-container .form-row input {
-      width: 100%;
-      height: 30px;
-      margin: 0;
-      padding: 5px;
-      outline: none;
-      border: 2px solid #dddddd;
-    }
-
-    /* ================= IMAGE ================= */
-    .form-container img {
-      margin-bottom: 15px;
-      border-radius: 10px;
-    }
   </style>
 </head>
 
 <body>
 
-  <!-- ================= BACKGROUND VIDEO ================= -->
-  <div class="video-bg">
-    <iframe 
-      src="https://www.youtube.com/embed/w2Ths5GJimc?autoplay=1&mute=1&controls=0&loop=1&playlist=w2Ths5GJimc&playsinline=1"
-      frameborder="0"
-      allow="autoplay; encrypted-media"
-      allowfullscreen>
-    </iframe>
-  </div>
+  <!-- ✅ YOUR VIDEO (ALREADY ADDED) -->
+  <iframe 
+    src="https://www.youtube.com/embed/w2Ths5GJimc?autoplay=1&mute=1&controls=0&loop=1&playlist=w2Ths5GJimc&modestbranding=1&rel=0"
+    frameborder="0"
+    allow="autoplay; fullscreen">
+  </iframe>
 
-  <!-- ================= MAIN CONTENT ================= -->
+  <!-- 🔥 FRONT CONTENT -->
   <div class="content">
-
     <h1>BGMI Logic Page</h1>
     <p>Welcome to my gaming website</p>
-
-    <div class="form-container">
-
-      <!-- IMAGE -->
-      <div class="form-row">
-        <img src="https://via.placeholder.com/150" width="150">
-      </div>
-
-      <!-- INPUT -->
-      <div class="form-row">
-        <input type="text" placeholder="Enter something...">
-      </div>
-
-    </div>
-
   </div>
 
 </body>
