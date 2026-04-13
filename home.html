@@ -1,1 +1,96 @@
-<img src="m416.png">
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>M416 3D Effect</title>
+
+    <style>
+        body {
+            margin: 0;
+            background: black;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        /* 📦 4:3 CONTAINER (FIXED IMAGE) */
+        .container {
+            width: 600px;
+            aspect-ratio: 4/3;
+            perspective: 1000px;
+        }
+
+        /* 🖼 IMAGE FRAME */
+        .frame {
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            border-radius: 15px;
+            position: relative;
+            box-shadow: 0 0 30px cyan;
+        }
+
+        /* 🔫 GUN IMAGE */
+        .gun {
+            width: 110%;
+            position: absolute;
+            top: -5%;
+            left: -5%;
+            transition: transform 0.1s ease;
+            filter: drop-shadow(0 0 20px cyan);
+        }
+
+    </style>
+</head>
+
+<body>
+
+    <div class="container" id="box">
+        <div class="frame">
+            <img src="m416.png" class="gun" id="gun">
+        </div>
+    </div>
+
+    <script>
+        const box = document.getElementById("box");
+        const gun = document.getElementById("gun");
+
+        function moveGun(x, y) {
+            let rect = box.getBoundingClientRect();
+
+            let centerX = rect.width / 2;
+            let centerY = rect.height / 2;
+
+            let moveX = (x - centerX) / 15;
+            let moveY = (y - centerY) / 15;
+
+            gun.style.transform = `
+                translate(${moveX}px, ${moveY}px)
+                rotateX(${ -moveY / 2 }deg)
+                rotateY(${ moveX / 2 }deg)
+            `;
+        }
+
+        /* 🖱️ MOUSE */
+        box.addEventListener("mousemove", (e) => {
+            let rect = box.getBoundingClientRect();
+            moveGun(e.clientX - rect.left, e.clientY - rect.top);
+        });
+
+        /* 📱 TOUCH */
+        box.addEventListener("touchmove", (e) => {
+            let rect = box.getBoundingClientRect();
+            let touch = e.touches[0];
+            moveGun(touch.clientX - rect.left, touch.clientY - rect.top);
+        });
+
+        /* RESET */
+        box.addEventListener("mouseleave", () => {
+            gun.style.transform = "translate(0,0) rotateX(0) rotateY(0)";
+        });
+    </script>
+
+</body>
+</html>
