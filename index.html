@@ -1,4 +1,4 @@
-  <!DOCTYPE html>
+ <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
@@ -11,18 +11,22 @@
       height: 100%;
       overflow: hidden;
       font-family: Arial, sans-serif;
+      background: black;
     }
 
+    /* 🔥 PERFECT VIDEO FIT */
     iframe {
       position: fixed;
-      top: 0;
-      left: 0;
-      width: 100vw;
+      top: 50%;
+      left: 50%;
+      width: 177.77vh; /* 16:9 ratio */
       height: 100vh;
-      z-index: -1;
+      transform: translate(-50%, -50%);
       pointer-events: none;
+      z-index: -1;
     }
 
+    /* 🔥 CONTENT */
     .content {
       position: relative;
       z-index: 1;
@@ -30,21 +34,31 @@
       text-align: center;
       top: 40%;
     }
+
+    h1 {
+      font-size: 40px;
+      text-shadow: 0 0 20px #00ffcc;
+    }
+
+    p {
+      font-size: 18px;
+    }
   </style>
 </head>
 
 <body>
 
-  <!-- ✅ YOUR VIDEO IS ALREADY ADDED -->
+  <!-- ✅ YOUR VIDEO (ALREADY ADDED) -->
   <iframe 
-    src="https://www.youtube.com/embed/w2Ths5GJimc?autoplay=1&mute=1&controls=0&loop=1&playlist=w2Ths5GJimc"
+    src="https://www.youtube.com/embed/w2Ths5GJimc?autoplay=1&mute=1&controls=0&loop=1&playlist=w2Ths5GJimc&modestbranding=1&rel=0"
     frameborder="0"
     allow="autoplay; fullscreen">
   </iframe>
 
+  <!-- 🔥 FRONT CONTENT -->
   <div class="content">
     <h1>BGMI Logic Page</h1>
-    <p>Welcome to my website</p>
+    <p>Welcome to my gaming website</p>
   </div>
 
 </body>
