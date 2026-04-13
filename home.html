@@ -1,35 +1,36 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>M416 Glacier Animation</title>
+    <title>M416 Interactive</title>
 
     <style>
         body {
-            background: black;
-            overflow: hidden;
             margin: 0;
+            background: black;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            overflow: hidden;
         }
 
-        /* 🔫 IMAGE CONTAINER */
+        /* 📦 IMAGE CONTAINER (FIXED POSITION) */
+        .container {
+            width: 600px;
+            perspective: 1000px;
+        }
+
+        /* 🔫 IMAGE */
         .gun {
-            position: absolute;
-            width: 500px;
-            animation: moveGun 10s infinite alternate ease-in-out;
-        }
-
-        /* 🔥 IMAGE STYLE */
-        .gun img {
             width: 100%;
+            transition: transform 0.1s ease;
+            transform-style: preserve-3d;
             filter: drop-shadow(0 0 20px cyan);
         }
 
-        /* 🚀 ANIMATION (ALL DIRECTIONS) */
-        @keyframes moveGun {
-            0%   { top: 10%; left: 10%; }
-            25%  { top: 20%; left: 70%; }
-            50%  { top: 60%; left: 60%; }
-            75%  { top: 70%; left: 20%; }
-            100% { top: 30%; left: 40%; }
+        img {
+            width: 100%;
+            border-radius: 10px;
         }
 
     </style>
@@ -37,10 +38,47 @@
 
 <body>
 
-    <!-- 🔫 YOUR IMAGE -->
-    <div class="gun">
-        <img src="m416.png">
+    <div class="container" id="box">
+        <div class="gun" id="gun">
+            <img src="m416.png">
+        </div>
     </div>
+
+    <script>
+        const box = document.getElementById("box");
+        const gun = document.getElementById("gun");
+
+        function moveGun(x, y) {
+            let rect = box.getBoundingClientRect();
+
+            let centerX = rect.width / 2;
+            let centerY = rect.height / 2;
+
+            let rotateX = -(y - centerY) / 15;
+            let rotateY = (x - centerX) / 15;
+
+            gun.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+        }
+
+        /* 🖱️ MOUSE */
+        box.addEventListener("mousemove", (e) => {
+            let rect = box.getBoundingClientRect();
+            moveGun(e.clientX - rect.left, e.clientY - rect.top);
+        });
+
+        /* 📱 TOUCH */
+        box.addEventListener("touchmove", (e) => {
+            let rect = box.getBoundingClientRect();
+            let touch = e.touches[0];
+            moveGun(touch.clientX - rect.left, touch.clientY - rect.top);
+        });
+
+        /* RESET */
+        box.addEventListener("mouseleave", () => {
+            gun.style.transform = "rotateX(0deg) rotateY(0deg)";
+        });
+
+    </script>
 
 </body>
 </html>
