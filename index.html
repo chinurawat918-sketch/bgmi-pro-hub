@@ -1,4 +1,4 @@
- <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -37,12 +37,12 @@
             z-index: -1;
         }
 
-        /* LOGIN BOX */
+        /* LOGIN BOX (CENTER RIGHT) */
         .login-box {
-            position: absolute;
+            position: fixed;
             top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
+            right: 40px;
+            transform: translateY(-50%);
             background: rgba(0,0,0,0.75);
             padding: 40px;
             border-radius: 12px;
@@ -82,7 +82,7 @@
             transform: scale(1.05);
         }
 
-        /* 🔘 YOUR ADDED BUTTON CSS */
+        /* SOCIAL BUTTONS */
         .btn {
             width: 100%;
             padding: 15px;
@@ -136,12 +136,10 @@
     <div class="login-box">
         <h2>BGMI Login</h2>
 
-        <!-- ORIGINAL LOGIN (unchanged) -->
         <input type="text" placeholder="Username">
         <input type="password" placeholder="Password">
         <button>Login</button>
 
-        <!-- ADDED SOCIAL LOGIN -->
         <hr style="margin:15px 0; border:1px solid #555;">
 
         <div class="btn guest">👤 SIGN IN AS GUEST</div>
