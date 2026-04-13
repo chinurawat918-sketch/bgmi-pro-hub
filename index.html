@@ -16,7 +16,7 @@
             overflow: hidden;
         }
 
-        /* VIDEO BACKGROUND */
+        /* 🎥 HIGH QUALITY VIDEO BACKGROUND */
         video {
             position: fixed;
             top: 0;
@@ -24,10 +24,15 @@
             width: 100%;
             height: 100%;
             object-fit: cover;
+
+            /* 🔥 quality enhancements */
+            image-rendering: auto;
+            filter: contrast(1.1) brightness(1.05);
+
             z-index: -2;
         }
 
-        /* OVERLAY */
+        /* 🌫 OVERLAY */
         .overlay {
             position: fixed;
             width: 100%;
@@ -37,7 +42,7 @@
             z-index: -1;
         }
 
-        /* LOGIN BOX */
+        /* 📦 LOGIN BOX (RIGHT MIDDLE) */
         .login-box {
             position: fixed;
             top: 50%;
@@ -51,7 +56,7 @@
             box-shadow: 0 0 20px rgba(0,0,0,0.8);
         }
 
-        /* LOGO */
+        /* 🖼 LOGO */
         .logo {
             width: 140px;
             display: block;
@@ -64,6 +69,7 @@
             margin-bottom: 20px;
         }
 
+        /* 📝 INPUT */
         input {
             width: 100%;
             padding: 10px;
@@ -73,6 +79,7 @@
             outline: none;
         }
 
+        /* 🔘 LOGIN BUTTON */
         button {
             width: 100%;
             padding: 10px;
@@ -90,7 +97,7 @@
             transform: scale(1.05);
         }
 
-        /* SOCIAL BUTTONS */
+        /* 🔘 SOCIAL BUTTONS */
         .btn {
             width: 100%;
             padding: 15px;
@@ -117,18 +124,18 @@
 
 <body>
 
-    <!-- VIDEO -->
-    <video autoplay muted loop playsinline>
+    <!-- 🎥 VIDEO (HIGH QUALITY SETTINGS) -->
+    <video autoplay muted loop playsinline preload="auto">
         <source src="bgmi.mp4" type="video/mp4">
     </video>
 
-    <!-- OVERLAY -->
+    <!-- 🌫 OVERLAY -->
     <div class="overlay"></div>
 
-    <!-- LOGIN BOX -->
+    <!-- 📦 LOGIN BOX -->
     <div class="login-box">
 
-        <!-- LOGO -->
+        <!-- 🖼 LOGO -->
         <img src="logo.png" class="logo">
 
         <h2>Login</h2>
@@ -147,9 +154,8 @@
 
     </div>
 
-    <!-- JAVASCRIPT -->
+    <!-- 🧠 JAVASCRIPT -->
     <script>
-
         function login() {
             let user = document.getElementById("username").value;
             let pass = document.getElementById("password").value;
@@ -178,7 +184,6 @@
         function twitterLogin() {
             alert("Twitter Login Clicked");
         }
-
     </script>
 
 </body>
