@@ -5,8 +5,6 @@
   <title>Logic Page</title>
 
   <style>
-
-    /* ================= BACKGROUND + PAGE STYLE ================= */
     body, html {
       margin: 0;
       padding: 0;
@@ -16,81 +14,51 @@
       background: black;
     }
 
-    /* ================= BACKGROUND VIDEO STYLE ================= */
-  <!-- ================= BACKGROUND VIDEO CODE ================= -->
-<iframe 
-  src="https://www.youtube.com/embed/w2Ths5GJimc?autoplay=1&mute=1&controls=0&loop=1&playlist=w2Ths5GJimc&playsinline=1"
-  frameborder="0"
-  allow="autoplay; encrypted-media"
-  allowfullscreen
-  style="position: fixed; top: 50%; left: 50%; width: 177.77vh; height: 100vh; transform: translate(-50%, -50%); pointer-events: none;">
-</iframe>
+    /* 🔥 PERFECT VIDEO FIT */
+    iframe {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      width: 177.77vh; /* 16:9 ratio */
+      height: 100vh;
+      transform: translate(-50%, -50%);
+      pointer-events: none;
+      z-index: -1;
+    }
 
-    /* ================= MAIN CONTENT (LOGIC AREA) ================= */
+    /* 🔥 CONTENT */
     .content {
       position: relative;
       z-index: 1;
       color: white;
       text-align: center;
-      top: 35%;
+      top: 40%;
     }
 
-    /* ================= HEADING STYLE ================= */
     h1 {
       font-size: 40px;
       text-shadow: 0 0 20px #00ffcc;
     }
 
-    /* ================= LOGIC INPUT STYLE ================= */
-    .form-container .form-row input {
-      width: 100%;
-      height: 30px;
-      margin: 0;
-      padding: 5px;
-      outline: none;
-      border: 2px solid #dddddd;
+    p {
+      font-size: 18px;
     }
-
-    /* ================= IMAGE STYLE ================= */
-    .form-container img {
-      margin-bottom: 15px;
-      border-radius: 10px;
-    }
-
   </style>
 </head>
 
 <body>
 
-  <!-- ================= BACKGROUND VIDEO CODE ================= -->
+  <!-- ✅ YOUR VIDEO (ALREADY ADDED) -->
   <iframe 
     src="https://www.youtube.com/embed/w2Ths5GJimc?autoplay=1&mute=1&controls=0&loop=1&playlist=w2Ths5GJimc&modestbranding=1&rel=0"
     frameborder="0"
     allow="autoplay; fullscreen">
   </iframe>
 
-  <!-- ================= MAIN LOGIC CONTENT ================= -->
+  <!-- 🔥 FRONT CONTENT -->
   <div class="content">
-
-    <!-- ================= PAGE TITLE ================= -->
     <h1>BGMI Logic Page</h1>
-
-    <!-- ================= LOGIC SECTION (FORM + IMAGE) ================= -->
-    <div class="form-container">
-
-      <!-- IMAGE PART -->
-      <div class="form-row">
-        <!-- 🔴 REPLACE THIS IMAGE LINK -->
-        <img src="https://via.placeholder.com/150" alt="image" width="150">
-      </div>
-
-      <!-- INPUT FIELD -->
-      <div class="form-row">
-        <input type="text" placeholder="Enter something...">
-      </div>
-
-    </div>
-
+    <p>Welcome to my gaming website</p>
   </div>
 
 </body>
