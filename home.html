@@ -1,45 +1,46 @@
-
 <!DOCTYPE html>
 <html>
 <head>
-    <title>M416 3D Effect</title>
+    <title>M416 3D Advanced</title>
 
     <style>
         body {
             margin: 0;
             background: black;
-            display: flex;
-            justify-content: center;
-            align-items: center;
             height: 100vh;
             overflow: hidden;
         }
 
-        /* 📦 4:3 CONTAINER (FIXED IMAGE) */
+        /* 📦 LEFT POSITION */
         .container {
+            position: absolute;
+            left: 50px;
+            top: 50%;
+            transform: translateY(-50%);
+            
             width: 600px;
             aspect-ratio: 4/3;
-            perspective: 1000px;
+            perspective: 1200px;
         }
 
-        /* 🖼 IMAGE FRAME */
+        /* 🖼 FRAME */
         .frame {
             width: 100%;
             height: 100%;
             overflow: hidden;
             border-radius: 15px;
-            position: relative;
             box-shadow: 0 0 30px cyan;
+            position: relative;
         }
 
-        /* 🔫 GUN IMAGE */
+        /* 🔫 GUN */
         .gun {
-            width: 110%;
+            width: 120%;
             position: absolute;
-            top: -5%;
-            left: -5%;
-            transition: transform 0.1s ease;
-            filter: drop-shadow(0 0 20px cyan);
+            top: -10%;
+            left: -10%;
+            transition: transform 0.05s ease;
+            filter: drop-shadow(0 0 25px cyan);
         }
 
     </style>
@@ -60,16 +61,19 @@
         function moveGun(x, y) {
             let rect = box.getBoundingClientRect();
 
-            let centerX = rect.width / 2;
-            let centerY = rect.height / 2;
+            let percentX = (x / rect.width - 0.5);
+            let percentY = (y / rect.height - 0.5);
 
-            let moveX = (x - centerX) / 15;
-            let moveY = (y - centerY) / 15;
+            let moveX = percentX * 60;
+            let moveY = percentY * 60;
+
+            let rotateX = -percentY * 25;
+            let rotateY = percentX * 25;
 
             gun.style.transform = `
                 translate(${moveX}px, ${moveY}px)
-                rotateX(${ -moveY / 2 }deg)
-                rotateY(${ moveX / 2 }deg)
+                rotateX(${rotateX}deg)
+                rotateY(${rotateY}deg)
             `;
         }
 
