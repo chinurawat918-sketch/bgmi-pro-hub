@@ -27,7 +27,7 @@
             z-index: -2;
         }
 
-        /* DARK OVERLAY + BLUR */
+        /* OVERLAY */
         .overlay {
             position: fixed;
             width: 100%;
@@ -37,7 +37,7 @@
             z-index: -1;
         }
 
-        /* LOGIN BOX (RIGHT MIDDLE) */
+        /* LOGIN BOX */
         .login-box {
             position: fixed;
             top: 50%;
@@ -51,10 +51,17 @@
             box-shadow: 0 0 20px rgba(0,0,0,0.8);
         }
 
-        /* 🔥 LOGIN TITLE RIGHT ALIGN */
+        /* LOGO */
+        .logo {
+            width: 140px;
+            display: block;
+            margin-left: auto;
+            margin-bottom: 15px;
+        }
+
         .login-box h2 {
-            margin-bottom: 20px;
             text-align: right;
+            margin-bottom: 20px;
         }
 
         input {
@@ -95,25 +102,10 @@
             transition: 0.3s;
         }
 
-        .guest {
-            background: #dcdcdc;
-            color: black;
-        }
-
-        .facebook {
-            background: #1877f2;
-            color: white;
-        }
-
-        .google {
-            background: #ffffff;
-            color: black;
-        }
-
-        .twitter {
-            background: #1da1f2;
-            color: white;
-        }
+        .guest { background: #dcdcdc; color: black; }
+        .facebook { background: #1877f2; color: white; }
+        .google { background: #ffffff; color: black; }
+        .twitter { background: #1da1f2; color: white; }
 
         .btn:hover {
             transform: scale(1.03);
@@ -135,19 +127,59 @@
 
     <!-- LOGIN BOX -->
     <div class="login-box">
-        <h2>BGMI Login</h2>
 
-        <input type="text" placeholder="Username">
-        <input type="password" placeholder="Password">
-        <button>Login</button>
+        <!-- LOGO -->
+        <img src="logo.png" class="logo">
+
+        <h2>Login</h2>
+
+        <input type="text" id="username" placeholder="Username">
+        <input type="password" id="password" placeholder="Password">
+
+        <button onclick="login()">Login</button>
 
         <hr style="margin:15px 0; border:1px solid #555;">
 
-        <div class="btn guest">👤 SIGN IN AS GUEST</div>
-        <div class="btn facebook">🔵 SIGN IN WITH FACEBOOK</div>
-        <div class="btn google">🟢 SIGN IN WITH GOOGLE</div>
-        <div class="btn twitter">🐦 SIGN IN WITH TWITTER</div>
+        <div class="btn guest" onclick="guestLogin()">👤 SIGN IN AS GUEST</div>
+        <div class="btn facebook" onclick="fbLogin()">🔵 SIGN IN WITH FACEBOOK</div>
+        <div class="btn google" onclick="googleLogin()">🟢 SIGN IN WITH GOOGLE</div>
+        <div class="btn twitter" onclick="twitterLogin()">🐦 SIGN IN WITH TWITTER</div>
+
     </div>
+
+    <!-- JAVASCRIPT -->
+    <script>
+
+        function login() {
+            let user = document.getElementById("username").value;
+            let pass = document.getElementById("password").value;
+
+            if(user === "" || pass === "") {
+                alert("Please enter details");
+            } else {
+                alert("Login Successful 🔥");
+                window.location.href = "home.html";
+            }
+        }
+
+        function guestLogin() {
+            alert("Guest Login");
+            window.location.href = "home.html";
+        }
+
+        function fbLogin() {
+            alert("Facebook Login Clicked");
+        }
+
+        function googleLogin() {
+            alert("Google Login Clicked");
+        }
+
+        function twitterLogin() {
+            alert("Twitter Login Clicked");
+        }
+
+    </script>
 
 </body>
 </html>
