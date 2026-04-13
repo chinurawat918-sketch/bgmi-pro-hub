@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>M416 Gun</title>
+    <title>BGMI Guns</title>
 
     <style>
         body {
@@ -12,36 +12,88 @@
             text-align: center;
         }
 
-        .gun-box {
-            border: 2px solid orange;
-            margin: 60px auto;
-            padding: 30px;
-            width: 300px;
-            border-radius: 15px;
+        /* 🔙 BACK BUTTON */
+        button {
+            margin-top: 20px;
+            padding: 10px 20px;
+            background: orange;
+            border: none;
+            border-radius: 8px;
+            color: white;
+            cursor: pointer;
         }
 
+        /* 📦 GUN BOX */
+        .gun-box {
+            border: 2px solid white;
+            margin: 30px auto;
+            padding: 20px;
+            width: 300px;
+            border-radius: 15px;
+            transition: 0.3s;
+        }
+
+        /* ❄️ GLACIER SPECIAL STYLE */
+        .glacier {
+            border: 2px solid cyan;
+            box-shadow: 0 0 20px cyan;
+            background: rgba(0, 255, 255, 0.05);
+        }
+
+        /* IMAGE */
         img {
             width: 100%;
+            border-radius: 10px;
+            margin-bottom: 10px;
         }
+
+        /* HOVER */
+        .gun-box:hover {
+            transform: scale(1.05);
+        }
+
     </style>
 </head>
 
 <body>
 
-    <h1>🔫 M416 Details</h1>
+    <!-- 🔙 BACK BUTTON -->
+    <button onclick="goBack()">⬅ Back</button>
 
+    <h1>🔫 BGMI Guns</h1>
+
+    <!-- ❄️ M416 GLACIER -->
+    <div class="gun-box glacier">
+        <h2>❄️ M416 Glacier</h2>
+        <img src="https://staticg.sportskeeda.com/editor/2021/06/2d0f0-16232398482766-800.jpg">
+        <p><b>Damage:</b> 41</p>
+        <p><b>Range:</b> Medium</p>
+        <p><b>Type:</b> Assault Rifle</p>
+        <p><b>Skin:</b> Glacier (Legendary)</p>
+    </div>
+
+    <!-- AKM -->
     <div class="gun-box">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2e/M416_Assault_Rifle.png/640px-M416_Assault_Rifle.png">
-        <h2>M416</h2>
-        <p>Damage: 41</p>
-        <p>Range: Medium</p>
+        <h2>AKM</h2>
+        <p>Damage: 49</p>
+        <p>Range: High</p>
         <p>Type: Assault Rifle</p>
     </div>
 
+    <!-- AWM -->
+    <div class="gun-box">
+        <h2>AWM</h2>
+        <p>Damage: 105</p>
+        <p>Range: Very High</p>
+        <p>Type: Sniper</p>
+    </div>
+
+    <!-- SCRIPT -->
+    <script>
+        function goBack() {
+            window.location.href = "index.html";
+        }
+    </script>
+
 </body>
 </html>
-<script>
-function goBack() {
-    window.location.href = "index.html";
-}
-</script>
