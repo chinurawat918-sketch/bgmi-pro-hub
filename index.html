@@ -56,11 +56,37 @@
             margin-bottom: 20px;
         }
 
-        /* 🔘 SOCIAL BUTTONS */
+        input {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 6px;
+            border: none;
+            outline: none;
+        }
+
+        button {
+            width: 100%;
+            padding: 10px;
+            background: orange;
+            border: none;
+            border-radius: 6px;
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        button:hover {
+            background: darkorange;
+            transform: scale(1.05);
+        }
+
+        /* 🔘 YOUR ADDED BUTTON CSS */
         .btn {
             width: 100%;
             padding: 15px;
-            margin: 10px 0;
+            margin: 8px 0;
             border-radius: 8px;
             font-weight: bold;
             text-align: left;
@@ -108,7 +134,15 @@
 
     <!-- LOGIN BOX -->
     <div class="login-box">
-        <h2>Select Account</h2>
+        <h2>BGMI Login</h2>
+
+        <!-- ORIGINAL LOGIN (unchanged) -->
+        <input type="text" placeholder="Username">
+        <input type="password" placeholder="Password">
+        <button>Login</button>
+
+        <!-- ADDED SOCIAL LOGIN -->
+        <hr style="margin:15px 0; border:1px solid #555;">
 
         <div class="btn guest">👤 SIGN IN AS GUEST</div>
         <div class="btn facebook">🔵 SIGN IN WITH FACEBOOK</div>
