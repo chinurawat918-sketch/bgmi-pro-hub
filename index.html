@@ -5,6 +5,8 @@
   <title>Logic Page</title>
 
   <style>
+
+    /* ================= BACKGROUND + PAGE STYLE ================= */
     body, html {
       margin: 0;
       padding: 0;
@@ -14,6 +16,7 @@
       background: black;
     }
 
+    /* ================= BACKGROUND VIDEO STYLE ================= */
     iframe {
       position: fixed;
       top: 50%;
@@ -25,24 +28,22 @@
       z-index: -1;
     }
 
+    /* ================= MAIN CONTENT (LOGIC AREA) ================= */
     .content {
       position: relative;
       z-index: 1;
       color: white;
       text-align: center;
-      top: 40%;
+      top: 35%;
     }
 
+    /* ================= HEADING STYLE ================= */
     h1 {
       font-size: 40px;
       text-shadow: 0 0 20px #00ffcc;
     }
 
-    p {
-      font-size: 18px;
-    }
-
-    /* 🔴 YOUR ADDED LOGIC SECTION (FORM INPUT STYLE) */
+    /* ================= LOGIC INPUT STYLE ================= */
     .form-container .form-row input {
       width: 100%;
       height: 30px;
@@ -52,26 +53,44 @@
       border: 2px solid #dddddd;
     }
 
+    /* ================= IMAGE STYLE ================= */
+    .form-container img {
+      margin-bottom: 15px;
+      border-radius: 10px;
+    }
+
   </style>
 </head>
 
 <body>
 
+  <!-- ================= BACKGROUND VIDEO CODE ================= -->
   <iframe 
     src="https://www.youtube.com/embed/w2Ths5GJimc?autoplay=1&mute=1&controls=0&loop=1&playlist=w2Ths5GJimc&modestbranding=1&rel=0"
     frameborder="0"
     allow="autoplay; fullscreen">
   </iframe>
 
+  <!-- ================= MAIN LOGIC CONTENT ================= -->
   <div class="content">
-    <h1>BGMI Logic Page</h1>
-    <p>Welcome to my gaming website</p>
 
-    <!-- 🔴 SAMPLE FORM (YOUR LOGIC SECTION) -->
+    <!-- ================= PAGE TITLE ================= -->
+    <h1>BGMI Logic Page</h1>
+
+    <!-- ================= LOGIC SECTION (FORM + IMAGE) ================= -->
     <div class="form-container">
+
+      <!-- IMAGE PART -->
+      <div class="form-row">
+        <!-- 🔴 REPLACE THIS IMAGE LINK -->
+        <img src="https://via.placeholder.com/150" alt="image" width="150">
+      </div>
+
+      <!-- INPUT FIELD -->
       <div class="form-row">
         <input type="text" placeholder="Enter something...">
       </div>
+
     </div>
 
   </div>
