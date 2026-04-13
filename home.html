@@ -1,98 +1,57 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>M416 Free Move</title>
+<meta charset="UTF-8">
+<title>BGMI Gun Effect</title>
 
-    <style>
-        body {
-            margin: 0;
-            background: black;
-            height: 100vh;
-            overflow: hidden;
-        }
+<style>
+body {
+    margin: 0;
+    background: black;
+    overflow: hidden;
+}
 
-        /* 📦 TOP LEFT POSITION */
-        .container {
-            position: absolute;
-            top: 20px;
-            left: 20px;
+/* Fixed image box */
+.container {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    width: 400px;   /* 4:3 ratio */
+    height: 300px;
+    perspective: 1000px;
+}
 
-            width: 500px;
-            aspect-ratio: 4/3;
-            perspective: 1200px;
-        }
-
-        /* 🖼 FRAME */
-        .frame {
-            width: 100%;
-            height: 100%;
-            overflow: hidden;
-            border-radius: 12px;
-            box-shadow: 0 0 25px cyan;
-            position: relative;
-        }
-
-        /* 🔫 GUN IMAGE */
-        .gun {
-            width: 130%;
-            position: absolute;
-            top: -15%;
-            left: -15%;
-            transition: transform 0.03s linear;
-            filter: drop-shadow(0 0 25px cyan);
-        }
-
-    </style>
+/* Gun image */
+.gun {
+    width: 100%;
+    height: 100%;
+    transition: transform 0.1s;
+    transform-style: preserve-3d;
+}
+</style>
 </head>
 
 <body>
 
-    <div class="container" id="box">
-        <div class="frame">
-            <img src="m416.png" class="gun" id="gun">
-        </div>
-    </div>
+<div class="container">
+    <img src="m416.png" class="gun" id="gun">
+</div>
 
-    <script>
-        const gun = document.getElementById("gun");
+<script>
+const gun = document.getElementById("gun");
 
-        document.addEventListener("mousemove", (e) => {
-            let x = (e.clientX / window.innerWidth - 0.5);
-            let y = (e.clientY / window.innerHeight - 0.5);
+document.addEventListener("mousemove", (e) => {
 
-            let moveX = x * 120;
-            let moveY = y * 120;
+    let x = (window.innerWidth / 2 - e.clientX) / 20;
+    let y = (window.innerHeight / 2 - e.clientY) / 20;
 
-            let rotateX = -y * 35;
-            let rotateY = x * 35;
-
-            gun.style.transform = `
-                translate(${moveX}px, ${moveY}px)
-                rotateX(${rotateX}deg)
-                rotateY(${rotateY}deg)
-            `;
-        });
-
-        /* 📱 TOUCH SUPPORT */
-        document.addEventListener("touchmove", (e) => {
-            let touch = e.touches[0];
-
-            let x = (touch.clientX / window.innerWidth - 0.5);
-            let y = (touch.clientY / window.innerHeight - 0.5);
-
-            let moveX = x * 120;
-            let moveY = y * 120;
-
-            let rotateX = -y * 35;
-            let rotateY = x * 35;
-
-            gun.style.transform = `
-                translate(${moveX}px, ${moveY}px)
-                rotateX(${rotateX}deg)
-                rotateY(${rotateY}deg)
-            `;
-        });
-    </script>
+    gun.style.transform = `
+        rotateY(${x}deg)
+        rotateX(${y}deg)
+        scale(1.05)
+    `;
+});
+</script>
 
 </body>
 </html>
