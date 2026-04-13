@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>M416 3D Advanced</title>
+    <title>M416 Free Move</title>
 
     <style>
         body {
@@ -11,14 +11,13 @@
             overflow: hidden;
         }
 
-        /* 📦 LEFT POSITION */
+        /* 📦 TOP LEFT POSITION */
         .container {
             position: absolute;
-            left: 50px;
-            top: 50%;
-            transform: translateY(-50%);
-            
-            width: 600px;
+            top: 20px;
+            left: 20px;
+
+            width: 500px;
             aspect-ratio: 4/3;
             perspective: 1200px;
         }
@@ -28,18 +27,18 @@
             width: 100%;
             height: 100%;
             overflow: hidden;
-            border-radius: 15px;
-            box-shadow: 0 0 30px cyan;
+            border-radius: 12px;
+            box-shadow: 0 0 25px cyan;
             position: relative;
         }
 
-        /* 🔫 GUN */
+        /* 🔫 GUN IMAGE */
         .gun {
-            width: 120%;
+            width: 130%;
             position: absolute;
-            top: -10%;
-            left: -10%;
-            transition: transform 0.05s ease;
+            top: -15%;
+            left: -15%;
+            transition: transform 0.03s linear;
             filter: drop-shadow(0 0 25px cyan);
         }
 
@@ -55,44 +54,43 @@
     </div>
 
     <script>
-        const box = document.getElementById("box");
         const gun = document.getElementById("gun");
 
-        function moveGun(x, y) {
-            let rect = box.getBoundingClientRect();
+        document.addEventListener("mousemove", (e) => {
+            let x = (e.clientX / window.innerWidth - 0.5);
+            let y = (e.clientY / window.innerHeight - 0.5);
 
-            let percentX = (x / rect.width - 0.5);
-            let percentY = (y / rect.height - 0.5);
+            let moveX = x * 120;
+            let moveY = y * 120;
 
-            let moveX = percentX * 60;
-            let moveY = percentY * 60;
-
-            let rotateX = -percentY * 25;
-            let rotateY = percentX * 25;
+            let rotateX = -y * 35;
+            let rotateY = x * 35;
 
             gun.style.transform = `
                 translate(${moveX}px, ${moveY}px)
                 rotateX(${rotateX}deg)
                 rotateY(${rotateY}deg)
             `;
-        }
-
-        /* 🖱️ MOUSE */
-        box.addEventListener("mousemove", (e) => {
-            let rect = box.getBoundingClientRect();
-            moveGun(e.clientX - rect.left, e.clientY - rect.top);
         });
 
-        /* 📱 TOUCH */
-        box.addEventListener("touchmove", (e) => {
-            let rect = box.getBoundingClientRect();
+        /* 📱 TOUCH SUPPORT */
+        document.addEventListener("touchmove", (e) => {
             let touch = e.touches[0];
-            moveGun(touch.clientX - rect.left, touch.clientY - rect.top);
-        });
 
-        /* RESET */
-        box.addEventListener("mouseleave", () => {
-            gun.style.transform = "translate(0,0) rotateX(0) rotateY(0)";
+            let x = (touch.clientX / window.innerWidth - 0.5);
+            let y = (touch.clientY / window.innerHeight - 0.5);
+
+            let moveX = x * 120;
+            let moveY = y * 120;
+
+            let rotateX = -y * 35;
+            let rotateY = x * 35;
+
+            gun.style.transform = `
+                translate(${moveX}px, ${moveY}px)
+                rotateX(${rotateX}deg)
+                rotateY(${rotateY}deg)
+            `;
         });
     </script>
 
