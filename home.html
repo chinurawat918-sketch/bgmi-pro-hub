@@ -1,55 +1,35 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>BGMI Guns</title>
+    <title>M416 Glacier Animation</title>
 
     <style>
         body {
             background: black;
-            color: white;
-            font-family: Arial;
-            text-align: center;
+            overflow: hidden;
+            margin: 0;
         }
 
-        /* 🔙 BACK BUTTON */
-        .back-btn {
-            margin-top: 20px;
-            padding: 10px 20px;
-            background: orange;
-            border: none;
-            border-radius: 8px;
-            color: white;
-            cursor: pointer;
-            font-weight: bold;
+        /* 🔫 IMAGE CONTAINER */
+        .gun {
+            position: absolute;
+            width: 500px;
+            animation: moveGun 10s infinite alternate ease-in-out;
         }
 
-        /* 📦 GUN BOX */
-        .gun-box {
-            border: 2px solid white;
-            margin: 30px auto;
-            padding: 20px;
-            width: 320px;
-            border-radius: 15px;
-            transition: 0.3s;
-        }
-
-        /* ❄️ GLACIER STYLE */
-        .glacier {
-            border: 2px solid cyan;
-            box-shadow: 0 0 20px cyan;
-            background: rgba(0, 255, 255, 0.05);
-        }
-
-        /* IMAGE */
-        img {
+        /* 🔥 IMAGE STYLE */
+        .gun img {
             width: 100%;
-            border-radius: 10px;
-            margin-bottom: 10px;
+            filter: drop-shadow(0 0 20px cyan);
         }
 
-        /* HOVER */
-        .gun-box:hover {
-            transform: scale(1.05);
+        /* 🚀 ANIMATION (ALL DIRECTIONS) */
+        @keyframes moveGun {
+            0%   { top: 10%; left: 10%; }
+            25%  { top: 20%; left: 70%; }
+            50%  { top: 60%; left: 60%; }
+            75%  { top: 70%; left: 20%; }
+            100% { top: 30%; left: 40%; }
         }
 
     </style>
@@ -57,45 +37,10 @@
 
 <body>
 
-    <!-- 🔙 BACK BUTTON -->
-    <button class="back-btn" onclick="goBack()">⬅ Back</button>
-
-    <h1>🔫 BGMI Guns</h1>
-
-    <!-- ❄️ M416 GLACIER -->
-    <div class="gun-box glacier">
-        <h2>❄️ M416 Glacier</h2>
-
+    <!-- 🔫 YOUR IMAGE -->
+    <div class="gun">
         <img src="m416.png">
-
-        <p><b>Head Damage:</b> 42</p>
-        <p><b>Body Damage:</b> 18</p>
-        <p><b>Leg Damage:</b> 18</p>
-        <p><b>Skin:</b> Glacier (Legendary)</p>
     </div>
-
-    <!-- AKM -->
-    <div class="gun-box">
-        <h2>AKM</h2>
-        <p>Damage: 49</p>
-        <p>Range: High</p>
-        <p>Type: Assault Rifle</p>
-    </div>
-
-    <!-- AWM -->
-    <div class="gun-box">
-        <h2>AWM</h2>
-        <p>Damage: 105</p>
-        <p>Range: Very High</p>
-        <p>Type: Sniper</p>
-    </div>
-
-    <!-- SCRIPT -->
-    <script>
-        function goBack() {
-            window.location.href = "index.html";
-        }
-    </script>
 
 </body>
 </html>
