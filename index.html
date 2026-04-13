@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+ <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -37,7 +37,7 @@
             z-index: -1;
         }
 
-        /* 📦 LOGIN BOX (RIGHT MIDDLE) */
+        /* 📦 LOGIN BOX */
         .login-box {
             position: fixed;
             top: 50%;
@@ -51,12 +51,21 @@
             box-shadow: 0 0 20px rgba(0,0,0,0.8);
         }
 
-        /* 🖼 LOGO */
+        /* 🖼 LOGO (FIXED) */
         .logo {
-            width: 140px;
+            width: 120px;
             display: block;
             margin-left: auto;
-            margin-bottom: 15px;
+            margin-bottom: 10px;
+            object-fit: contain;
+        }
+
+        /* fallback text */
+        .logo-text {
+            text-align: right;
+            font-size: 22px;
+            font-weight: bold;
+            margin-bottom: 10px;
         }
 
         .login-box h2 {
@@ -74,7 +83,7 @@
             outline: none;
         }
 
-        /* LOGIN BUTTON */
+        /* BUTTON */
         button {
             width: 100%;
             padding: 10px;
@@ -119,7 +128,7 @@
 
 <body>
 
-    <!-- 🎥 BACK TO MP4 VIDEO -->
+    <!-- 🎥 VIDEO -->
     <video autoplay muted loop playsinline preload="auto">
         <source src="bgmi.mp4" type="video/mp4">
     </video>
@@ -130,8 +139,9 @@
     <!-- 📦 LOGIN BOX -->
     <div class="login-box">
 
-        <!-- LOGO -->
-        <img src="logo.png" class="logo">
+        <!-- 🖼 LOGO + FALLBACK -->
+        <img src="logo.png" class="logo" onerror="this.style.display='none'">
+        <div class="logo-text">BGMI</div>
 
         <h2>Login</h2>
 
