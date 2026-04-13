@@ -2,21 +2,20 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Login Page</title>
+    <title>BGMI Login</title>
 
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: Arial, sans-serif;
+            font-family: Arial;
         }
 
         body {
             overflow: hidden;
         }
 
-        /* VIDEO BACKGROUND */
         video {
             position: fixed;
             top: 0;
@@ -27,54 +26,63 @@
             z-index: -1;
         }
 
-        /* LOGIN BOX */
+        .overlay {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+        }
+
         .login-box {
             position: absolute;
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            background: rgba(0,0,0,0.6);
+            background: rgba(0,0,0,0.7);
             padding: 40px;
-            border-radius: 10px;
+            border-radius: 12px;
             color: white;
             text-align: center;
+            width: 300px;
         }
 
         input {
             width: 100%;
             padding: 10px;
             margin: 10px 0;
+            border-radius: 6px;
             border: none;
-            outline: none;
-            border-radius: 5px;
         }
 
         button {
             width: 100%;
             padding: 10px;
-            background: red;
-            color: white;
+            background: orange;
             border: none;
-            border-radius: 5px;
+            border-radius: 6px;
+            color: white;
+            font-weight: bold;
             cursor: pointer;
         }
 
         button:hover {
-            background: darkred;
+            background: darkorange;
         }
     </style>
 </head>
 
 <body>
 
-    <!-- VIDEO -->
+    <!-- VIDEO BACKGROUND -->
     <video autoplay muted loop>
         <source src="bgmi.mp4" type="video/mp4">
     </video>
 
-    <!-- LOGIN FORM -->
+    <div class="overlay"></div>
+
+    <!-- LOGIN -->
     <div class="login-box">
-        <h2>Login</h2>
+        <h2>BGMI Login</h2>
         <input type="text" placeholder="Username">
         <input type="password" placeholder="Password">
         <button>Login</button>
