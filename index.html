@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+ <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -48,7 +48,7 @@
             border-radius: 12px;
             color: white;
             text-align: center;
-            width: 300px;
+            width: 320px;
             box-shadow: 0 0 20px rgba(0,0,0,0.8);
         }
 
@@ -56,31 +56,43 @@
             margin-bottom: 20px;
         }
 
-        input {
+        /* 🔘 SOCIAL BUTTONS */
+        .btn {
             width: 100%;
-            padding: 10px;
+            padding: 15px;
             margin: 10px 0;
-            border-radius: 6px;
-            border: none;
-            outline: none;
-        }
-
-        button {
-            width: 100%;
-            padding: 10px;
-            background: orange;
-            border: none;
-            border-radius: 6px;
-            color: white;
+            border-radius: 8px;
             font-weight: bold;
+            text-align: left;
             cursor: pointer;
             transition: 0.3s;
         }
 
-        button:hover {
-            background: darkorange;
-            transform: scale(1.05);
+        .guest {
+            background: #dcdcdc;
+            color: black;
         }
+
+        .facebook {
+            background: #1877f2;
+            color: white;
+        }
+
+        .google {
+            background: #ffffff;
+            color: black;
+        }
+
+        .twitter {
+            background: #1da1f2;
+            color: white;
+        }
+
+        .btn:hover {
+            transform: scale(1.03);
+            opacity: 0.9;
+        }
+
     </style>
 </head>
 
@@ -96,10 +108,12 @@
 
     <!-- LOGIN BOX -->
     <div class="login-box">
-        <h2>BGMI Login</h2>
-        <input type="text" placeholder="Username">
-        <input type="password" placeholder="Password">
-        <button>Login</button>
+        <h2>Select Account</h2>
+
+        <div class="btn guest">👤 SIGN IN AS GUEST</div>
+        <div class="btn facebook">🔵 SIGN IN WITH FACEBOOK</div>
+        <div class="btn google">🟢 SIGN IN WITH GOOGLE</div>
+        <div class="btn twitter">🐦 SIGN IN WITH TWITTER</div>
     </div>
 
 </body>
