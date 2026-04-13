@@ -16,15 +16,20 @@
             overflow: hidden;
         }
 
-        /* 🎥 YOUTUBE BACKGROUND */
-        iframe {
+        /* 🎥 HIGH QUALITY VIDEO BACKGROUND */
+        video {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
+            object-fit: cover;
+
+            /* 🔥 quality enhancements */
+            image-rendering: auto;
+            filter: contrast(1.1) brightness(1.05);
+
             z-index: -2;
-            pointer-events: none;
         }
 
         /* 🌫 OVERLAY */
@@ -33,7 +38,7 @@
             width: 100%;
             height: 100%;
             background: rgba(0,0,0,0.6);
-            backdrop-filter: blur(4px);
+            backdrop-filter: blur(6px);
             z-index: -1;
         }
 
@@ -64,7 +69,7 @@
             margin-bottom: 20px;
         }
 
-        /* INPUT */
+        /* 📝 INPUT */
         input {
             width: 100%;
             padding: 10px;
@@ -74,7 +79,7 @@
             outline: none;
         }
 
-        /* LOGIN BUTTON */
+        /* 🔘 LOGIN BUTTON */
         button {
             width: 100%;
             padding: 10px;
@@ -92,7 +97,7 @@
             transform: scale(1.05);
         }
 
-        /* SOCIAL BUTTONS */
+        /* 🔘 SOCIAL BUTTONS */
         .btn {
             width: 100%;
             padding: 15px;
@@ -119,12 +124,10 @@
 
 <body>
 
-    <!-- 🎥 YOUTUBE BACKGROUND -->
-    <iframe 
-    src="https://www.youtube.com/embed/wqfRxWPo6UU?autoplay=1&mute=1&loop=1&playlist=wqfRxWPo6UU&controls=0&modestbranding=1"
-    frameborder="0"
-    allow="autoplay">
-    </iframe>
+    <!-- 🎥 VIDEO (HIGH QUALITY SETTINGS) -->
+    <video autoplay muted loop playsinline preload="auto">
+        <source src="bgmi.mp4" type="video/mp4">
+    </video>
 
     <!-- 🌫 OVERLAY -->
     <div class="overlay"></div>
@@ -132,24 +135,56 @@
     <!-- 📦 LOGIN BOX -->
     <div class="login-box">
 
-        <!-- LOGO -->
+        <!-- 🖼 LOGO -->
         <img src="logo.png" class="logo">
 
         <h2>Login</h2>
 
-        <input type="text" placeholder="Username">
-        <input type="password" placeholder="Password">
+        <input type="text" id="username" placeholder="Username">
+        <input type="password" id="password" placeholder="Password">
 
-        <button>Login</button>
+        <button onclick="login()">Login</button>
 
         <hr style="margin:15px 0; border:1px solid #555;">
 
-        <div class="btn guest">👤 SIGN IN AS GUEST</div>
-        <div class="btn facebook">🔵 SIGN IN WITH FACEBOOK</div>
-        <div class="btn google">🟢 SIGN IN WITH GOOGLE</div>
-        <div class="btn twitter">🐦 SIGN IN WITH TWITTER</div>
+        <div class="btn guest" onclick="guestLogin()">👤 SIGN IN AS GUEST</div>
+        <div class="btn facebook" onclick="fbLogin()">🔵 SIGN IN WITH FACEBOOK</div>
+        <div class="btn google" onclick="googleLogin()">🟢 SIGN IN WITH GOOGLE</div>
+        <div class="btn twitter" onclick="twitterLogin()">🐦 SIGN IN WITH TWITTER</div>
 
     </div>
+
+    <!-- 🧠 JAVASCRIPT -->
+    <script>
+        function login() {
+            let user = document.getElementById("username").value;
+            let pass = document.getElementById("password").value;
+
+            if(user === "" || pass === "") {
+                alert("Please enter details");
+            } else {
+                alert("Login Successful 🔥");
+                window.location.href = "home.html";
+            }
+        }
+
+        function guestLogin() {
+            alert("Guest Login");
+            window.location.href = "home.html";
+        }
+
+        function fbLogin() {
+            alert("Facebook Login Clicked");
+        }
+
+        function googleLogin() {
+            alert("Google Login Clicked");
+        }
+
+        function twitterLogin() {
+            alert("Twitter Login Clicked");
+        }
+    </script>
 
 </body>
 </html>
