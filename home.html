@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+ <!DOCTYPE html>
 <html>
 <body style="margin:0; background:black; overflow:hidden;">
 
@@ -9,7 +9,7 @@
 // Scene
 let scene = new THREE.Scene();
 
-// Camera (same)
+// Camera
 let camera = new THREE.PerspectiveCamera(
 75,
 window.innerWidth/window.innerHeight,
@@ -17,10 +17,11 @@ window.innerWidth/window.innerHeight,
 1000
 );
 
-// 🔥 MOVE CAMERA TO LEFT TOP VIEW
-camera.position.set(-3, 2, 6);
+// 🔥 TOP LEFT VIEW
+camera.position.set(-10, 6, 8);
+camera.lookAt(-5, 3, 0);
 
-// Renderer FULL SCREEN
+// Renderer
 let renderer = new THREE.WebGLRenderer();
 renderer.setSize(window.innerWidth, window.innerHeight);
 document.body.appendChild(renderer.domElement);
@@ -28,19 +29,19 @@ document.body.appendChild(renderer.domElement);
 // Light
 scene.add(new THREE.AmbientLight(0xffffff,1));
 
-// 🔥 BASE ROTATION
+// Base rotation
 let baseY = Math.PI/24;
 let baseX = -Math.PI/2;
 
-// Load gun
+// Gun
 let gun;
 new THREE.GLTFLoader().load('pubg_mobile_m4_glacier.glb', (gltf)=>{
     gun = gltf.scene;
 
     gun.scale.set(8,8,8);
 
-    // base position (LEFT TOP)
-    gun.position.set(-2, 1.5, 0);
+    // 🔥 Top-left position
+    gun.position.set(-5, 3, 0);
 
     gun.rotation.y = baseY;
     gun.rotation.x = baseX;
@@ -50,7 +51,9 @@ new THREE.GLTFLoader().load('pubg_mobile_m4_glacier.glb', (gltf)=>{
 
 // Control
 let rightClick = false;
-let speed = 4;
+
+// 🔥 FAST MOVEMENT MULTIPLIER
+let speed = 8;  
 
 let targetX = 0;
 let targetY = 0;
@@ -67,7 +70,7 @@ window.addEventListener("mouseup", ()=>{
     targetY = 0;
 });
 
-// Disable menu
+// Disable right click menu
 window.addEventListener("contextmenu", e=>e.preventDefault());
 
 // Mouse move
@@ -91,13 +94,13 @@ function animate(){
 
     if(gun){
         if(rightClick){
-            // move
-            gun.rotation.y += ((baseY + targetX) - gun.rotation.y) * 0.08;
-            gun.rotation.x += ((baseX - targetY) - gun.rotation.x) * 0.08;
+            // 🔥 FAST FOLLOW (responsive)
+            gun.rotation.y += ((baseY + targetX) - gun.rotation.y) * 0.2;
+            gun.rotation.x += ((baseX - targetY) - gun.rotation.x) * 0.2;
         } else {
-            // 🔥 return to base
-            gun.rotation.y += (baseY - gun.rotation.y) * 0.08;
-            gun.rotation.x += (baseX - gun.rotation.x) * 0.08;
+            // 🔥 SLOW RETURN (smooth)
+            gun.rotation.y += (baseY - gun.rotation.y) * 0.05;
+            gun.rotation.x += (baseX - gun.rotation.x) * 0.05;
         }
     }
 
