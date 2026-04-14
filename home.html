@@ -19,7 +19,7 @@ let scene = new THREE.Scene();
 
 // Camera
 let camera = new THREE.PerspectiveCamera(75, 1600/900, 0.1, 1000);
-camera.position.z = 120;
+camera.position.z = 40;
 
 // Renderer
 let renderer = new THREE.WebGLRenderer();
@@ -39,7 +39,7 @@ let gun1, gun2, gun3, gun3Group;
 // 🔫 Gun 1
 new THREE.GLTFLoader().load('pubg_mobile_m4_glacier.glb', (gltf)=>{
     gun1 = gltf.scene;
-    gun1.scale.set(300,300,300);
+    gun1.scale.set(30,30,30);
     gun1.position.set(-15, 0, 0);
     gun1.rotation.set(0, Math.PI/2,0);
     scene.add(gun1);
