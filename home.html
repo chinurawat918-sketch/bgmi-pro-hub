@@ -51,7 +51,7 @@ let targetY = 0;
 
 // Mouse down
 window.addEventListener("mousedown", (e)=>{
-    if(e.button === 2) rightClick = true;
+    if(e.button === 2) leftClick = true;
 });
 
 // Mouse up
@@ -66,7 +66,7 @@ window.addEventListener("contextmenu", e=>e.preventDefault());
 
 // Mouse move
 window.addEventListener("mousemove", (e)=>{
-    if(gun && rightClick){
+    if(gun && leftClick){
         targetX = (e.clientX / window.innerWidth - 0.5) * speed;
         targetY = (e.clientY / window.innerHeight - 0.5) * speed;
     }
