@@ -28,10 +28,11 @@ scene.add(new THREE.AmbientLight(0xffffff,1));
 let baseY = Math.PI/24;
 let baseX = -Math.PI/2;
 
-// Store all guns
+// Store guns
 let guns = [];
+let activeGun = null;
 
-// Function to add gun
+// Loader function
 function addGun(path, x, y){
     new THREE.GLTFLoader().load(path, (gltf)=>{
         let gun = gltf.scene;
@@ -47,47 +48,67 @@ function addGun(path, x, y){
     });
 }
 
-// 🔫 Add all guns
-addGun('pubg_mobile_m4_glacier.glb', -2.5, 1.5); // Gun1
-addGun('awm_godzilla_animated_4k_textures.glb', 2.5, 1.5); // Gun2
-addGun('ump-45__aggressor.glb', -2.5, -1.5); // Gun3
-addGun('ak47.glb', 2.5, -1.5); // Gun4
+// 🔫 4 CORNERS
+addGun('pubg_mobile_m4_glacier.glb', -3, 2);   // top-left
+addGun('awm_godzilla_animated_4k_textures.glb', 3, 2);   // top-right
+addGun('ump-45__aggressor.glb', -3, -2); // bottom-left
+addGun('ak47.glb', 3, -2); // bottom-right
 
-// Controls
-let rightClick = false;
-let isTouch = false;
+// Raycaster (detect click on gun)
+let raycaster = new THREE.Raycaster();
+let mouse = new THREE.Vector2();
 
 let speed = 8;
 let targetX = 0;
 let targetY = 0;
 
-// Mouse
+// Mouse down (select gun)
 window.addEventListener("mousedown", (e)=>{
-    if(e.button === 2) rightClick = true;
+    mouse.x = (e.clientX / 800) * 2 - 1;
+    mouse.y = -(e.clientY / 600) * 2 + 1;
+
+    raycaster.setFromCamera(mouse, camera);
+
+    let intersects = raycaster.intersectObjects(guns, true);
+
+    if(intersects.length > 0){
+        activeGun = intersects[0].object.parent;
+    }
 });
 
+// Mouse up
 window.addEventListener("mouseup", ()=>{
-    rightClick = false;
+    activeGun = null;
     targetX = 0;
     targetY = 0;
 });
 
-window.addEventListener("contextmenu", e=>e.preventDefault());
-
+// Mouse move
 window.addEventListener("mousemove", (e)=>{
-    if(rightClick){
+    if(activeGun){
         targetX = (e.clientX / window.innerWidth - 0.5) * speed;
         targetY = (e.clientY / window.innerHeight - 0.5) * speed;
     }
 });
 
 // Touch
-window.addEventListener("touchstart", ()=>{
-    isTouch = true;
+window.addEventListener("touchstart", (e)=>{
+    let t = e.touches[0];
+
+    mouse.x = (t.clientX / 800) * 2 - 1;
+    mouse.y = -(t.clientY / 600) * 2 + 1;
+
+    raycaster.setFromCamera(mouse, camera);
+
+    let intersects = raycaster.intersectObjects(guns, true);
+
+    if(intersects.length > 0){
+        activeGun = intersects[0].object.parent;
+    }
 });
 
 window.addEventListener("touchend", ()=>{
-    isTouch = false;
+    activeGun = null;
     targetX = 0;
     targetY = 0;
 });
@@ -95,7 +116,7 @@ window.addEventListener("touchend", ()=>{
 window.addEventListener("touchmove", (e)=>{
     e.preventDefault();
 
-    if(isTouch){
+    if(activeGun){
         let t = e.touches[0];
 
         targetX = (t.clientX / window.innerWidth - 0.5) * speed;
@@ -108,12 +129,12 @@ function animate(){
     requestAnimationFrame(animate);
 
     guns.forEach(gun=>{
-        if(rightClick || isTouch){
-            // 🔥 fast rotation
+        if(gun === activeGun){
+            // 🔥 move selected gun
             gun.rotation.y += ((baseY + targetX) - gun.rotation.y) * 0.2;
             gun.rotation.x += ((baseX - targetY) - gun.rotation.x) * 0.2;
         } else {
-            // 🔥 slow return
+            // 🔥 others return slowly
             gun.rotation.y += (baseY - gun.rotation.y) * 0.05;
             gun.rotation.x += (baseX - gun.rotation.x) * 0.05;
         }
