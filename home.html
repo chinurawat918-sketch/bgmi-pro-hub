@@ -38,9 +38,7 @@ let gun;
 new THREE.GLTFLoader().load('pubg_mobile_m4_glacier.glb', (gltf)=>{
     gun = gltf.scene;
 
-    gun.scale.set(6,6,6);
-
-    // 🔥 Top-left position
+    gun.scale.set(8,8,8);
     gun.position.set(-5, 3, 0);
 
     gun.rotation.y = baseY;
@@ -51,29 +49,25 @@ new THREE.GLTFLoader().load('pubg_mobile_m4_glacier.glb', (gltf)=>{
 
 // Control
 let rightClick = false;
+let isTouch = false;
 
-// 🔥 FAST MOVEMENT MULTIPLIER
-let speed = 8;  
-
+let speed = 8;
 let targetX = 0;
 let targetY = 0;
 
-// Mouse down
+// Mouse
 window.addEventListener("mousedown", (e)=>{
     if(e.button === 2) rightClick = true;
 });
 
-// Mouse up
 window.addEventListener("mouseup", ()=>{
     rightClick = false;
     targetX = 0;
     targetY = 0;
 });
 
-// Disable right click menu
 window.addEventListener("contextmenu", e=>e.preventDefault());
 
-// Mouse move
 window.addEventListener("mousemove", (e)=>{
     if(gun && rightClick){
         targetX = (e.clientX / window.innerWidth - 0.5) * speed;
@@ -81,11 +75,26 @@ window.addEventListener("mousemove", (e)=>{
     }
 });
 
-// Touch
+// 🔥 TOUCH SUPPORT (ADDED)
+window.addEventListener("touchstart", ()=>{
+    isTouch = true;
+});
+
+window.addEventListener("touchend", ()=>{
+    isTouch = false;
+    targetX = 0;
+    targetY = 0;
+});
+
 window.addEventListener("touchmove", (e)=>{
-    let t = e.touches[0];
-    targetX = (t.clientX / window.innerWidth - 0.5) * speed;
-    targetY = (t.clientY / window.innerHeight - 0.5) * speed;
+    e.preventDefault();
+
+    if(gun && isTouch){
+        let t = e.touches[0];
+
+        targetX = (t.clientX / window.innerWidth - 0.5) * speed;
+        targetY = (t.clientY / window.innerHeight - 0.5) * speed;
+    }
 });
 
 // Animation
@@ -93,12 +102,12 @@ function animate(){
     requestAnimationFrame(animate);
 
     if(gun){
-        if(rightClick){
-            // 🔥 FAST FOLLOW (responsive)
+        if(rightClick || isTouch){
+            // 🔥 FAST MOVE
             gun.rotation.y += ((baseY + targetX) - gun.rotation.y) * 0.2;
             gun.rotation.x += ((baseX - targetY) - gun.rotation.x) * 0.2;
         } else {
-            // 🔥 SLOW RETURN (smooth)
+            // 🔥 SLOW RETURN
             gun.rotation.y += (baseY - gun.rotation.y) * 0.05;
             gun.rotation.x += (baseX - gun.rotation.x) * 0.05;
         }
