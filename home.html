@@ -1,4 +1,4 @@
- <!DOCTYPE html>
+<!DOCTYPE html>
 <html>
 <body style="margin:0; background:black;">
 
@@ -54,7 +54,7 @@ new THREE.GLTFLoader().load('ump-45__aggressor.glb', (gltf)=>{
     scene.add(gun2);
 });
 
-// 🔫 Gun 3 (RIGHT + FRAME)
+// 🔫 Gun 3
 new THREE.GLTFLoader().load('awm_godzilla_animated_4k_textures.glb', (gltf)=>{
     gun3 = gltf.scene;
 
@@ -62,11 +62,9 @@ new THREE.GLTFLoader().load('awm_godzilla_animated_4k_textures.glb', (gltf)=>{
     scene.add(gun3Group);
 
     gun3.scale.set(35,35,35);
-     gun3.rotation.set(0, Math.PI/2,0);
+    gun3.rotation.set(0, Math.PI/2,0);
 
-    // FRAME
     gun3Group.add(gun3);
-
     gun3Group.position.set(20,10, 0);
 });
 
@@ -75,7 +73,6 @@ let activeGun = null;
 let targetX = 0;
 let targetY = 0;
 
-// 🔥 movement offset
 let offsetX = 0;
 let offsetY = 0;
 
@@ -119,7 +116,38 @@ window.addEventListener("mousemove", (e)=>{
     }
 });
 
-// Arrow keys move gun3 group
+// 🔥 TOUCH SUPPORT (ADDED)
+let lastX = 0;
+let lastY = 0;
+
+window.addEventListener("touchstart", (e)=>{
+    let t = e.touches[0];
+    selectGun(t.clientX, t.clientY);
+
+    lastX = t.clientX;
+    lastY = t.clientY;
+});
+
+window.addEventListener("touchmove", (e)=>{
+    if(activeGun){
+        let t = e.touches[0];
+
+        let dx = t.clientX - lastX;
+        let dy = t.clientY - lastY;
+
+        targetX = dx * 0.01;
+        targetY = dy * 0.01;
+
+        lastX = t.clientX;
+        lastY = t.clientY;
+    }
+});
+
+window.addEventListener("touchend", ()=>{
+    activeGun = null;
+});
+
+// Arrow keys
 window.addEventListener("keydown", (e)=>{
     if(e.key === "ArrowRight") offsetX += 0.5;
     if(e.key === "ArrowLeft") offsetX -= 0.5;
@@ -131,7 +159,6 @@ window.addEventListener("keydown", (e)=>{
 function animate(){
     requestAnimationFrame(animate);
 
-    // move full group
     if(gun3Group){
         gun3Group.position.x = 35 + offsetX;
         gun3Group.position.y = 0 + offsetY;
@@ -158,4 +185,4 @@ animate();
 </script>
 
 </body>
-</html> can you add some firing anime type   i think touching is not working 
+</html>
