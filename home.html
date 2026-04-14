@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+ <!DOCTYPE html>
 <html>
 <body style="margin:0; background:black; overflow:hidden;">
 
@@ -9,7 +9,7 @@
 // Scene
 let scene = new THREE.Scene();
 
-// Camera (ONLY CHANGED FOR TOP-LEFT)
+// Camera
 let camera = new THREE.PerspectiveCamera(
 75,
 window.innerWidth/window.innerHeight,
@@ -17,8 +17,9 @@ window.innerWidth/window.innerHeight,
 1000
 );
 
-camera.position.set(-12, 8, 8);
-camera.lookAt(-8, 5, 0);
+// 🔥 TOP LEFT VIEW
+camera.position.set(-10, 6, 8);
+camera.lookAt(-5, 3, 0);
 
 // Renderer
 let renderer = new THREE.WebGLRenderer();
@@ -28,7 +29,7 @@ document.body.appendChild(renderer.domElement);
 // Light
 scene.add(new THREE.AmbientLight(0xffffff,1));
 
-// Base rotation (SAME)
+// Base rotation
 let baseY = Math.PI/24;
 let baseX = -Math.PI/2;
 
@@ -38,9 +39,7 @@ new THREE.GLTFLoader().load('pubg_mobile_m4_glacier.glb', (gltf)=>{
     gun = gltf.scene;
 
     gun.scale.set(8,8,8);
-
-    // 🔥 ONLY CHANGE (TOP-LEFT POSITION)
-    gun.position.set(-8, 5, 0);
+    gun.position.set(-5, 3, 0);
 
     gun.rotation.y = baseY;
     gun.rotation.x = baseX;
@@ -48,7 +47,7 @@ new THREE.GLTFLoader().load('pubg_mobile_m4_glacier.glb', (gltf)=>{
     scene.add(gun);
 });
 
-// Control (SAME)
+// Control
 let rightClick = false;
 let isTouch = false;
 
@@ -76,7 +75,7 @@ window.addEventListener("mousemove", (e)=>{
     }
 });
 
-// Touch
+// 🔥 TOUCH SUPPORT (ADDED)
 window.addEventListener("touchstart", ()=>{
     isTouch = true;
 });
@@ -98,15 +97,17 @@ window.addEventListener("touchmove", (e)=>{
     }
 });
 
-// Animation (SAME)
+// Animation
 function animate(){
     requestAnimationFrame(animate);
 
     if(gun){
         if(rightClick || isTouch){
+            // 🔥 FAST MOVE
             gun.rotation.y += ((baseY + targetX) - gun.rotation.y) * 0.2;
             gun.rotation.x += ((baseX - targetY) - gun.rotation.x) * 0.2;
         } else {
+            // 🔥 SLOW RETURN
             gun.rotation.y += (baseY - gun.rotation.y) * 0.05;
             gun.rotation.x += (baseX - gun.rotation.x) * 0.05;
         }
@@ -116,7 +117,7 @@ function animate(){
 }
 animate();
 
-// Resize (SAME)
+// Resize fix
 window.addEventListener("resize", ()=>{
     camera.aspect = window.innerWidth / window.innerHeight;
     camera.updateProjectionMatrix();
