@@ -39,8 +39,8 @@ let gun1, gun2, gun3, gun3Group;
 // 🔫 Gun 1
 new THREE.GLTFLoader().load('pubg_mobile_m4_glacier.glb', (gltf)=>{
     gun1 = gltf.scene;
-    gun1.scale.set(10,10,10);
-    gun1.position.set(-15, 0, 0);
+    gun1.scale.set(20,20,20);
+    gun1.position.set(-25, 0, 0);
     gun1.rotation.set(baseX1, baseY1, 0);
     scene.add(gun1);
 });
@@ -48,8 +48,8 @@ new THREE.GLTFLoader().load('pubg_mobile_m4_glacier.glb', (gltf)=>{
 // 🔫 Gun 2
 new THREE.GLTFLoader().load('ump-45__aggressor.glb', (gltf)=>{
     gun2 = gltf.scene;
-    gun2.scale.set(.6,.6,.6);
-    gun2.position.set(10, 0, 0);
+    gun2.scale.set(1,1,1);
+    gun2.position.set(0, 0, 0);
     gun2.rotation.set(baseX2, baseY2, 0);
     scene.add(gun2);
 });
@@ -61,11 +61,11 @@ new THREE.GLTFLoader().load('awm_godzilla_animated_4k_textures.glb', (gltf)=>{
     gun3Group = new THREE.Group();
     scene.add(gun3Group);
 
-    gun3.scale.set(10,10,10);
+    gun3.scale.set(20,20,20);
      gun3.rotation.set(baseX3, baseY3, 0);
 
     // FRAME
-    let geometry = new THREE.BoxGeometry(30, 15, 10);
+    let geometry = new THREE.BoxGeometry(40,20,15);
     let edges = new THREE.EdgesGeometry(geometry);
 
     let frame = new THREE.LineSegments(
@@ -73,12 +73,12 @@ new THREE.GLTFLoader().load('awm_godzilla_animated_4k_textures.glb', (gltf)=>{
         new THREE.LineBasicMaterial({ color: 0x00ff00 })
     );
 
-    frame.position.set(8, 0, 0); // adjust if needed
+    frame.position.set(3, 0, 0); // adjust if needed
 
     gun3Group.add(gun3);
     gun3Group.add(frame);
 
-    gun3Group.position.set(35, 0, 0);
+    gun3Group.position.set(25, 0, 0);
 });
 
 // ================= CONTROLS =================
