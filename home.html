@@ -1,8 +1,7 @@
-<!DOCTYPE html>
+ <!DOCTYPE html>
 <html>
 <body style="margin:0; background:black;">
 
-<!-- 🔲 4:3 BOX (TOP LEFT) -->
 <div id="box" style="
 position:absolute;
 top:0;
@@ -18,16 +17,11 @@ height:600px;
 // Scene
 let scene = new THREE.Scene();
 
-// Camera (normal center)
-let camera = new THREE.PerspectiveCamera(
-75,
-800/600,
-0.1,
-1000
-);
+// Camera
+let camera = new THREE.PerspectiveCamera(75, 800/600, 0.1, 1000);
 camera.position.z = 10;
 
-// Renderer (INSIDE BOX)
+// Renderer
 let renderer = new THREE.WebGLRenderer();
 renderer.setSize(800, 600);
 document.getElementById("box").appendChild(renderer.domElement);
@@ -35,27 +29,64 @@ document.getElementById("box").appendChild(renderer.domElement);
 // Light
 scene.add(new THREE.AmbientLight(0xffffff,1));
 
-// Base rotation
-let baseY = Math.PI/24;
-let baseX = -Math.PI/2;
+// ================= GUN 1 =================
+let baseY1 = Math.PI/24;
+let baseX1 = -Math.PI/2;
 
-// Gun
-let gun;
-new THREE.GLTFLoader().load('awm_godzilla_animated_4k_textures.glb ', (gltf)=>{
-    gun = gltf.scene;
+let gun1;
+new THREE.GLTFLoader().load('pubg_mobile_m4_glacier.glb', (gltf)=>{
+    gun1 = gltf.scene;
 
-    gun.scale.set(6,6,6);
+    gun1.scale.set(6,6,6);
 
-    // 🔥 TOP LEFT INSIDE FRAME
-    gun.position.set(-2.5, 1.5, 0);
+    // 🔥 LEFT
+    gun1.position.set(-3, 1.5, 0);
 
-    gun.rotation.y = baseY;
-    gun.rotation.x = baseX;
+    gun1.rotation.y = baseY1;
+    gun1.rotation.x = baseX1;
 
-    scene.add(gun);
+    scene.add(gun1);
 });
 
-// Control
+// ================= UMP =================
+let baseY2 = Math.PI/2;
+let baseX2 = Math.PI/6;
+
+let gun2;
+new THREE.GLTFLoader().load('ump-45__aggressor.glb', (gltf)=>{
+    gun2 = gltf.scene;
+
+    gun2.scale.set(.2,.2,.2);
+
+    // 🔥 CENTER
+    gun2.position.set(0, 1.5, 0);
+
+    gun2.rotation.y = baseY2;
+    gun2.rotation.x = baseX2;
+
+    scene.add(gun2);
+});
+
+// ================= AWM =================
+let baseY3 = Math.PI/6;
+let baseX3 = Math.PI/6;
+
+let gun3;
+new THREE.GLTFLoader().load('awm_godzilla_animated_4k_textures.glb', (gltf)=>{
+    gun3 = gltf.scene;
+
+    gun3.scale.set(10,10,10);
+
+    // 🔥 RIGHT
+    gun3.position.set(3, 1.5, 0);
+
+    gun3.rotation.y = baseY3;
+    gun3.rotation.x = baseX3;
+
+    scene.add(gun3);
+});
+
+// ================= CONTROLS =================
 let rightClick = false;
 let isTouch = false;
 
@@ -63,7 +94,6 @@ let speed = 8;
 let targetX = 0;
 let targetY = 0;
 
-// Mouse
 window.addEventListener("mousedown", (e)=>{
     if(e.button === 2) rightClick = true;
 });
@@ -77,17 +107,14 @@ window.addEventListener("mouseup", ()=>{
 window.addEventListener("contextmenu", e=>e.preventDefault());
 
 window.addEventListener("mousemove", (e)=>{
-    if(gun && rightClick){
+    if(rightClick){
         targetX = (e.clientX / window.innerWidth - 0.5) * speed;
         targetY = (e.clientY / window.innerHeight - 0.5) * speed;
     }
 });
 
 // Touch
-window.addEventListener("touchstart", ()=>{
-    isTouch = true;
-});
-
+window.addEventListener("touchstart", ()=>{ isTouch = true; });
 window.addEventListener("touchend", ()=>{
     isTouch = false;
     targetX = 0;
@@ -97,27 +124,37 @@ window.addEventListener("touchend", ()=>{
 window.addEventListener("touchmove", (e)=>{
     e.preventDefault();
 
-    if(gun && isTouch){
-        let t = e.touches[0];
-
-        targetX = (t.clientX / window.innerWidth - 0.5) * speed;
-        targetY = (t.clientY / window.innerHeight - 0.5) * speed;
-    }
+    let t = e.touches[0];
+    targetX = (t.clientX / window.innerWidth - 0.5) * speed;
+    targetY = (t.clientY / window.innerHeight - 0.5) * speed;
 });
 
-// Animation
+// ================= ANIMATION =================
 function animate(){
     requestAnimationFrame(animate);
 
-    if(gun){
-        if(rightClick || isTouch){
-            gun.rotation.y += ((baseY + targetX) - gun.rotation.y) * 0.2;
-            gun.rotation.x += ((baseX - targetY) - gun.rotation.x) * 0.2;
-        } else {
-            gun.rotation.y += (baseY - gun.rotation.y) * 0.05;
-            gun.rotation.x += (baseX - gun.rotation.x) * 0.05;
+    [gun1, gun2, gun3].forEach(gun=>{
+        if(gun){
+            if(rightClick || isTouch){
+                gun.rotation.y += ((gun.rotation.y + targetX) - gun.rotation.y) * 0.2;
+                gun.rotation.x += ((gun.rotation.x - targetY) - gun.rotation.x) * 0.2;
+            } else {
+                // return to base (each uses its own base)
+                if(gun === gun1){
+                    gun.rotation.y += (baseY1 - gun.rotation.y) * 0.05;
+                    gun.rotation.x += (baseX1 - gun.rotation.x) * 0.05;
+                }
+                if(gun === gun2){
+                    gun.rotation.y += (baseY2 - gun.rotation.y) * 0.05;
+                    gun.rotation.x += (baseX2 - gun.rotation.x) * 0.05;
+                }
+                if(gun === gun3){
+                    gun.rotation.y += (baseY3 - gun.rotation.y) * 0.05;
+                    gun.rotation.x += (baseX3 - gun.rotation.x) * 0.05;
+                }
+            }
         }
-    }
+    });
 
     renderer.render(scene,camera);
 }
