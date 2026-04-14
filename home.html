@@ -67,6 +67,19 @@ new THREE.GLTFLoader().load('awm_godzilla_animated_4k_textures.glb', (gltf)=>{
 
     gun3.rotation.set(baseX3, baseY3, 0);
     scene.add(gun3);
+    // 🔥 FRAME FOR GUN 3
+let box = new THREE.Box3().setFromObject(gun3);
+let size = box.getSize(new THREE.Vector3());
+
+let geometry = new THREE.BoxGeometry(size.x * 1.2, size.y * 1.2, size.z * 1.2);
+let edges = new THREE.EdgesGeometry(geometry);
+let line = new THREE.LineSegments(
+    edges,
+    new THREE.LineBasicMaterial({ color: 0xffffff }) // 🔥 change color here
+);
+
+// attach frame to gun3
+gun3.add(line);
 });
 
 // ================= CONTROLS =================
