@@ -49,7 +49,7 @@ new THREE.GLTFLoader().load('pubg_mobile_m4_glacier.glb', (gltf)=>{
 new THREE.GLTFLoader().load('ump-45__aggressor.glb', (gltf)=>{
     gun2 = gltf.scene;
     gun2.scale.set(.6,.6,.6);
-    gun2.position.set(20, 0, 0);
+    gun2.position.set(10, 0, 0);
     gun2.rotation.set(baseX2, baseY2, 0);
     scene.add(gun2);
 });
@@ -153,7 +153,7 @@ window.addEventListener("touchmove", (e)=>{
 
 // 🔥 MOVE ONLY GUN 3 FRAME (ARROW KEYS)
 window.addEventListener("keydown", (e)=>{
-    if(e.key === "ArrowRight") offsetX += 10;
+    if(e.key === "ArrowRight") offsetX += 1;
     if(e.key === "ArrowLeft") offsetX -= 1;
     if(e.key === "ArrowUp") offsetY += 1;
     if(e.key === "ArrowDown") offsetY -= 1;
@@ -165,7 +165,7 @@ function animate(){
 
     // 🔥 update gun3 position
     if(gun3){
-        gun3.position.set(18 + offsetX, 0 + offsetY, 0);
+        gun3.position.set(0 + offsetX, 0 + offsetY, 0);
     }
 
     [gun1, gun2, gun3].forEach((gun, i)=>{
