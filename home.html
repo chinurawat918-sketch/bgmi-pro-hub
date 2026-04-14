@@ -39,7 +39,7 @@ let gun1, gun2, gun3;
 // 🔫 Gun 1 (LEFT)
 new THREE.GLTFLoader().load('pubg_mobile_m4_glacier.glb', (gltf)=>{
     gun1 = gltf.scene;
-    gun1.scale.set(30,30,30);
+    gun1.scale.set(40,40,40);
 
     // 🔥 LEFT SIDE
     gun1.position.set(-18, 0, 0);
@@ -66,7 +66,7 @@ new THREE.GLTFLoader().load('awm_godzilla_animated_4k_textures.glb', (gltf)=>{
     gun3.scale.set(23,23,23);
 
     // 🔥 RIGHT SIDE
-    gun3.position.set(10, 0, 0);
+    gun3.position.set(20, 0, 0);
 
     gun3.rotation.set(baseX3, baseY3, 0);
     scene.add(gun3);
