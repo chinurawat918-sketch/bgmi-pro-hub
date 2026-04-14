@@ -60,7 +60,7 @@ let offsetY = 0;
 
 new THREE.GLTFLoader().load('awm_godzilla_animated_4k_textures.glb', (gltf)=>{
     gun3 = gltf.scene;
-    gun3.scale.set(23,23,23);
+    gun3.scale.set(12,12,12);
 
     // 🔥 base position (right side)
     gun3.position.set(1, 0, 0);
@@ -68,7 +68,7 @@ new THREE.GLTFLoader().load('awm_godzilla_animated_4k_textures.glb', (gltf)=>{
     gun3.rotation.set(baseX3, baseY3, 0);
     scene.add(gun3);
 // 🔥 PERFECT FIXED FRAME (ALWAYS FULL)
-let geometry = new THREE.BoxGeometry(8, 4, 2); 
+let geometry = new THREE.BoxGeometry(12, 4, 2); 
 let edges = new THREE.EdgesGeometry(geometry);
 
 let line = new THREE.LineSegments(
