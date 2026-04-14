@@ -41,7 +41,7 @@ let gap = 6;
 
 new THREE.GLTFLoader().load('pubg_mobile_m4_glacier.glb', (gltf)=>{
     gun1 = gltf.scene;
-    gun1.scale.set(6,6,6);
+    gun1.scale.set(10,10,10);
     gun1.position.set(0, gap, 0);
     gun1.rotation.set(baseX1, baseY1, 0);
     scene.add(gun1);
