@@ -6,8 +6,8 @@
 position:absolute;
 top:0;
 left:0;
-width:800px;
-height:600px; 
+width:1600px;
+height:900px; 
 "></div>
 
 <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/build/three.min.js"></script>
@@ -18,12 +18,12 @@ height:600px;
 let scene = new THREE.Scene();
 
 // Camera
-let camera = new THREE.PerspectiveCamera(75, 800/600, 0.1, 1000);
+let camera = new THREE.PerspectiveCamera(75, 1600/900, 0.1, 1000);
 camera.position.z = 120;
 
 // Renderer
 let renderer = new THREE.WebGLRenderer();
-renderer.setSize(800, 600);
+renderer.setSize(1600, 900);
 document.getElementById("box").appendChild(renderer.domElement);
 
 // Light
