@@ -1,4 +1,4 @@
- <!DOCTYPE html>
+<!DOCTYPE html>
 <html>
 <body style="margin:0; background:black; overflow:hidden;">
 
@@ -18,7 +18,7 @@ window.innerWidth/window.innerHeight,
 );
 
 // 🔥 TOP LEFT VIEW
-camera.position.set(-5, 6, 8);
+camera.position.set(-10, 6, 8);
 camera.lookAt(-15, 3, 0);
 
 // Renderer
@@ -39,7 +39,7 @@ new THREE.GLTFLoader().load('pubg_mobile_m4_glacier.glb', (gltf)=>{
     gun = gltf.scene;
 
     gun.scale.set(6,6,6);
-    gun.position.set(-5,3,0);
+    gun.position.set(-5, 3, 0);
 
     gun.rotation.y = baseY;
     gun.rotation.x = baseX;
