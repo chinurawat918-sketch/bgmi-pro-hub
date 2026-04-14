@@ -2,14 +2,8 @@
 <html>
 <body style="margin:0; background:black;">
 
-<!-- 🔲 4:3 BOX (TOP LEFT) -->
-<div id="box" style="
-position:absolute;
-top:0;
-left:0;
-width:800px;
-height:600px;
-"></div>
+<!-- 🔲 4:3 BOX -->
+<div id="box" style="position:absolute; top:0; left:0; width:800px; height:600px;"></div>
 
 <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/build/three.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/GLTFLoader.js"></script>
@@ -34,49 +28,97 @@ scene.add(new THREE.AmbientLight(0xffffff,1));
 let baseY = Math.PI/24;
 let baseX = -Math.PI/2;
 
-// 🔫 Gun 1 (Top Left)
-new THREE.GLTFLoader().load('pubg_mobile_m4_glacier.glb', (gltf)=>{
-    let gun1 = gltf.scene;
-    gun1.scale.set(4,4,4);
-    gun1.position.set(-2.5, 1.5, 0);
-    gun1.rotation.y = baseY;
-    gun1.rotation.x = baseX;
-    scene.add(gun1);
+// Store all guns
+let guns = [];
+
+// Function to add gun
+function addGun(path, x, y){
+    new THREE.GLTFLoader().load(path, (gltf)=>{
+        let gun = gltf.scene;
+
+        gun.scale.set(4,4,4);
+        gun.position.set(x, y, 0);
+
+        gun.rotation.y = baseY;
+        gun.rotation.x = baseX;
+
+        scene.add(gun);
+        guns.push(gun);
+    });
+}
+
+// 🔫 Add all guns
+addGun('pubg_mobile_m4_glacier.glb', -2.5, 1.5); // Gun1
+addGun('awm_godzilla_animated_4k_textures.glb', 2.5, 1.5); // Gun2
+addGun('ump-45__aggressor.glb', -2.5, -1.5); // Gun3
+addGun('ak47.glb', 2.5, -1.5); // Gun4
+
+// Controls
+let rightClick = false;
+let isTouch = false;
+
+let speed = 8;
+let targetX = 0;
+let targetY = 0;
+
+// Mouse
+window.addEventListener("mousedown", (e)=>{
+    if(e.button === 2) rightClick = true;
 });
 
-// 🔫 Gun 2 (Top Right)
-new THREE.GLTFLoader().load('awm_godzilla_animated_4k_textures.glb', (gltf)=>{
-    let gun2 = gltf.scene;
-    gun2.scale.set(4,4,4);
-    gun2.position.set(2.5, 1.5, 0);
-    gun2.rotation.y = baseY;
-    gun2.rotation.x = baseX;
-    scene.add(gun2);
+window.addEventListener("mouseup", ()=>{
+    rightClick = false;
+    targetX = 0;
+    targetY = 0;
 });
 
-// 🔫 Gun 3 (Bottom Left)
-new THREE.GLTFLoader().load('ump-45__aggressor.glb', (gltf)=>{
-    let gun3 = gltf.scene;
-    gun3.scale.set(4,4,4);
-    gun3.position.set(-2.5, -1.5, 0);
-    gun3.rotation.y = baseY;
-    gun3.rotation.x = baseX;
-    scene.add(gun3);
+window.addEventListener("contextmenu", e=>e.preventDefault());
+
+window.addEventListener("mousemove", (e)=>{
+    if(rightClick){
+        targetX = (e.clientX / window.innerWidth - 0.5) * speed;
+        targetY = (e.clientY / window.innerHeight - 0.5) * speed;
+    }
 });
 
-// 🔫 Gun 4 (Bottom Right)
-new THREE.GLTFLoader().load('ak47.glb', (gltf)=>{
-    let gun4 = gltf.scene;
-    gun4.scale.set(4,4,4);
-    gun4.position.set(2.5, -1.5, 0);
-    gun4.rotation.y = baseY;
-    gun4.rotation.x = baseX;
-    scene.add(gun4);
+// Touch
+window.addEventListener("touchstart", ()=>{
+    isTouch = true;
+});
+
+window.addEventListener("touchend", ()=>{
+    isTouch = false;
+    targetX = 0;
+    targetY = 0;
+});
+
+window.addEventListener("touchmove", (e)=>{
+    e.preventDefault();
+
+    if(isTouch){
+        let t = e.touches[0];
+
+        targetX = (t.clientX / window.innerWidth - 0.5) * speed;
+        targetY = (t.clientY / window.innerHeight - 0.5) * speed;
+    }
 });
 
 // Animation
 function animate(){
     requestAnimationFrame(animate);
+
+    guns.forEach(gun=>{
+        if(rightClick || isTouch){
+            // 🔥 fast rotation
+            gun.rotation.y += ((baseY + targetX) - gun.rotation.y) * 0.2;
+            gun.rotation.x += ((baseX - targetY) - gun.rotation.x) * 0.2;
+        } else {
+            // 🔥 slow return
+            gun.rotation.y += (baseY - gun.rotation.y) * 0.05;
+            gun.rotation.x += (baseX - gun.rotation.x) * 0.05;
+        }
+    });
+
     renderer.render(scene,camera);
 }
 animate();
