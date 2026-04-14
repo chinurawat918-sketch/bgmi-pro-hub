@@ -1,6 +1,6 @@
- <!DOCTYPE html> 
+ <!DOCTYPE html>
 <html>
-<body style="margin:0; background:black;"> 
+<body style="margin:0; background:black;">
 
 <div id="box" style="
 position:absolute;
@@ -54,7 +54,7 @@ new THREE.GLTFLoader().load('ump-45__aggressor.glb', (gltf)=>{
     scene.add(gun2);
 });
 
-// 🔫 Gun 3
+// 🔫 Gun 3 (RIGHT + FRAME)
 new THREE.GLTFLoader().load('awm_godzilla_animated_4k_textures.glb', (gltf)=>{
     gun3 = gltf.scene;
 
@@ -62,9 +62,11 @@ new THREE.GLTFLoader().load('awm_godzilla_animated_4k_textures.glb', (gltf)=>{
     scene.add(gun3Group);
 
     gun3.scale.set(35,35,35);
-    gun3.rotation.set(0, Math.PI/2,0);
+     gun3.rotation.set(0, Math.PI/2,0);
 
+    // FRAME
     gun3Group.add(gun3);
+
     gun3Group.position.set(20,10, 0);
 });
 
@@ -104,8 +106,6 @@ function selectGun(clientX, clientY){
 // Mouse
 window.addEventListener("mousedown", (e)=>{
     selectGun(e.clientX, e.clientY);
-
-    fireAllGuns(); // 🔥 ADDED LINE
 });
 
 window.addEventListener("mouseup", ()=>{
@@ -126,54 +126,6 @@ window.addEventListener("keydown", (e)=>{
     if(e.key === "ArrowUp") offsetY += 0.5;
     if(e.key === "ArrowDown") offsetY -= 0.5;
 });
-
-// 🔥 ONLY ADDED FUNCTION
-function fireAllGuns() {
-    if(gun1){
-        let flash = new THREE.Mesh(
-            new THREE.SphereGeometry(2,16,16),
-            new THREE.MeshBasicMaterial({color:0xffaa00})
-        );
-        flash.position.set(25,0,0);
-        gun1.add(flash);
-
-        gun1.position.x -= 2;
-        setTimeout(()=>{
-            gun1.remove(flash);
-            gun1.position.x += 2;
-        }, 100);
-    }
-
-    if(gun2){
-        let flash = new THREE.Mesh(
-            new THREE.SphereGeometry(2,16,16),
-            new THREE.MeshBasicMaterial({color:0xffaa00})
-        );
-        flash.position.set(15,0,0);
-        gun2.add(flash);
-
-        gun2.position.x -= 2;
-        setTimeout(()=>{
-            gun2.remove(flash);
-            gun2.position.x += 2;
-        }, 100);
-    }
-
-    if(gun3){
-        let flash = new THREE.Mesh(
-            new THREE.SphereGeometry(2,16,16),
-            new THREE.MeshBasicMaterial({color:0xffaa00})
-        );
-        flash.position.set(25,0,0);
-        gun3.add(flash);
-
-        gun3.position.x -= 2;
-        setTimeout(()=>{
-            gun3.remove(flash);
-            gun3.position.x += 2;
-        }, 100);
-    }
-}
 
 // ================= ANIMATION =================
 function animate(){
@@ -206,4 +158,4 @@ animate();
 </script>
 
 </body>
-</html>
+</html> can you add some firing anime type   i think touching is not working 
