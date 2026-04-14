@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+ <!DOCTYPE html>
 <html>
 <body style="margin:0; background:black;">
 
@@ -17,7 +17,7 @@ height:600px;
 // Scene
 let scene = new THREE.Scene();
 
-// Camera (zoomed out for big gap)
+// Camera (same)
 let camera = new THREE.PerspectiveCamera(75, 800/600, 0.1, 1000);
 camera.position.z = 25;
 
@@ -36,29 +36,38 @@ let baseY3 = Math.PI/6,  baseX3 = Math.PI/6;
 
 let gun1, gun2, gun3;
 
-// 🔥 HUGE GAP (10x)
-let gap = 6;
-
+// 🔫 Gun 1 (LEFT)
 new THREE.GLTFLoader().load('pubg_mobile_m4_glacier.glb', (gltf)=>{
     gun1 = gltf.scene;
     gun1.scale.set(20,20,20);
-    gun1.position.set(0, gap, 0);
+
+    // 🔥 LEFT SIDE
+    gun1.position.set(-10, 0, 0);
+
     gun1.rotation.set(baseX1, baseY1, 0);
     scene.add(gun1);
 });
 
+// 🔫 Gun 2 (CENTER)
 new THREE.GLTFLoader().load('ump-45__aggressor.glb', (gltf)=>{
     gun2 = gltf.scene;
     gun2.scale.set(.5,.5,.5);
+
+    // 🔥 CENTER
     gun2.position.set(0, 0, 0);
+
     gun2.rotation.set(baseX2, baseY2, 0);
     scene.add(gun2);
 });
 
+// 🔫 Gun 3 (RIGHT)
 new THREE.GLTFLoader().load('awm_godzilla_animated_4k_textures.glb', (gltf)=>{
     gun3 = gltf.scene;
     gun3.scale.set(20,20,20);
-    gun3.position.set(0, -gap, 0);
+
+    // 🔥 RIGHT SIDE
+    gun3.position.set(10, 0, 0);
+
     gun3.rotation.set(baseX3, baseY3, 0);
     scene.add(gun3);
 });
@@ -71,7 +80,6 @@ let targetY = 0;
 let raycaster = new THREE.Raycaster();
 let mouse = new THREE.Vector2();
 
-// 🔥 SELECT FUNCTION (FIXED)
 function selectGun(clientX, clientY){
     let rect = renderer.domElement.getBoundingClientRect();
 
@@ -104,7 +112,7 @@ window.addEventListener("mouseup", ()=>{
 
 window.addEventListener("mousemove", (e)=>{
     if(activeGun){
-        targetX = (e.movementX) * 0.01; // 🔥 smooth follow
+        targetX = (e.movementX) * 0.01;
         targetY = (e.movementY) * 0.01;
     }
 });
@@ -141,11 +149,9 @@ function animate(){
         let baseX = [baseX1, baseX2, baseX3][i];
 
         if(gun === activeGun){
-            // 🔥 SLOW + FOLLOW ACCURATE
             gun.rotation.y += targetX;
             gun.rotation.x += targetY;
         } else {
-            // 🔁 smooth return
             gun.rotation.y += (baseY - gun.rotation.y) * 0.08;
             gun.rotation.x += (baseX - gun.rotation.x) * 0.08;
         }
