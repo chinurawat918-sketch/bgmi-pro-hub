@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+ <!DOCTYPE html>
 <html>
 <body style="margin:0; background:black; overflow:hidden;">
 
@@ -17,9 +17,8 @@ window.innerWidth/window.innerHeight,
 1000
 );
 
-// 🔥 TOP LEFT VIEW
-camera.position.set(-50, 6, 8);
-camera.lookAt(-5, 3, 0);
+// Same camera (covers all)
+camera.position.set(0, 2, 12);
 
 // Renderer
 let renderer = new THREE.WebGLRenderer();
@@ -33,91 +32,53 @@ scene.add(new THREE.AmbientLight(0xffffff,1));
 let baseY = Math.PI/24;
 let baseX = -Math.PI/2;
 
-// Gun
-let gun;
-new THREE.GLTFLoader().load('pubg_mobile_m4_glacier.glb', (gltf)=>{
-    gun = gltf.scene;
+// Loader
+let loader = new THREE.GLTFLoader();
 
-    gun.scale.set(6,6,6);
-    gun.position.set(-50, 3, 0);
+// 🔥 POSITIONS FOR 5 GUNS
+let positions = [
+  [-6, 3, 0],   // gun1 (top-left)
+  [0, 3, 0],    // gun2 (top-center)
+  [6, 3, 0],    // gun3 (top-right)
+  [-3, -1, 0],  // gun4 (bottom-left)
+  [3, -1, 0]    // gun5 (bottom-right)
+];
 
-    gun.rotation.y = baseY;
-    gun.rotation.x = baseX;
+// Store guns
+let guns = [];
 
-    scene.add(gun);
-});
+// Load 5 guns (same model for now)
+positions.forEach((pos, i)=>{
+    loader.load('pubg_mobile_m4_glacier.glb', (gltf)=>{
+        let gun = gltf.scene;
 
-// Control
-let rightClick = false;
-let isTouch = false;
+        // 🔥 smaller size so all fit
+        gun.scale.set(3,3,3);
 
-let speed = 8;
-let targetX = 0;
-let targetY = 0;
+        gun.position.set(pos[0], pos[1], pos[2]);
 
-// Mouse
-window.addEventListener("mousedown", (e)=>{
-    if(e.button === 2) rightClick = true;
-});
+        gun.rotation.y = baseY;
+        gun.rotation.x = baseX;
 
-window.addEventListener("mouseup", ()=>{
-    rightClick = false;
-    targetX = 0;
-    targetY = 0;
-});
-
-window.addEventListener("contextmenu", e=>e.preventDefault());
-
-window.addEventListener("mousemove", (e)=>{
-    if(gun && rightClick){
-        targetX = (e.clientX / window.innerWidth - 0.5) * speed;
-        targetY = (e.clientY / window.innerHeight - 0.5) * speed;
-    }
-});
-
-// 🔥 TOUCH SUPPORT (ADDED)
-window.addEventListener("touchstart", ()=>{
-    isTouch = true;
-});
-
-window.addEventListener("touchend", ()=>{
-    isTouch = false;
-    targetX = 0;
-    targetY = 0;
-});
-
-window.addEventListener("touchmove", (e)=>{
-    e.preventDefault();
-
-    if(gun && isTouch){
-        let t = e.touches[0];
-
-        targetX = (t.clientX / window.innerWidth - 0.5) * speed;
-        targetY = (t.clientY / window.innerHeight - 0.5) * speed;
-    }
+        scene.add(gun);
+        guns.push(gun);
+    });
 });
 
 // Animation
 function animate(){
     requestAnimationFrame(animate);
 
-    if(gun){
-        if(rightClick || isTouch){
-            // 🔥 FAST MOVE
-            gun.rotation.y += ((baseY + targetX) - gun.rotation.y) * 0.2;
-            gun.rotation.x += ((baseX - targetY) - gun.rotation.x) * 0.2;
-        } else {
-            // 🔥 SLOW RETURN
-            gun.rotation.y += (baseY - gun.rotation.y) * 0.05;
-            gun.rotation.x += (baseX - gun.rotation.x) * 0.05;
-        }
-    }
+    guns.forEach(gun=>{
+        // slight idle rotation
+        gun.rotation.y += 0.005;
+    });
 
     renderer.render(scene,camera);
 }
 animate();
 
-// Resize fix
+// Resize
 window.addEventListener("resize", ()=>{
     camera.aspect = window.innerWidth / window.innerHeight;
     camera.updateProjectionMatrix();
