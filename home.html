@@ -6,7 +6,7 @@ i am creating my website second page first one is index.html ok and the second o
 
 <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/build/three.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/GLTFLoader.js"></script>
-    
+
 <script>
 let width = 800, height = 600;
 
@@ -51,7 +51,7 @@ let targetY = 0;
 
 // Mouse down
 window.addEventListener("mousedown", (e)=>{
-    if(e.button === 2) leftClick = true;
+    if(e.button === 2) rightClick = true;
 });
 
 // Mouse up
@@ -66,7 +66,7 @@ window.addEventListener("contextmenu", e=>e.preventDefault());
 
 // Mouse move
 window.addEventListener("mousemove", (e)=>{
-    if(gun && leftClick){
+    if(gun && rightClick){
         targetX = (e.clientX / window.innerWidth - 0.5) * speed;
         targetY = (e.clientY / window.innerHeight - 0.5) * speed;
     }
@@ -95,4 +95,4 @@ animate();
 </script>
 
 </body>
-</html>    
+</html>   
