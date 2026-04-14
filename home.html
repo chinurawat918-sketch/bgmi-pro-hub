@@ -78,7 +78,7 @@ new THREE.GLTFLoader().load('awm_godzilla_animated_4k_textures.glb', (gltf)=>{
     gun3Group.add(gun3);
     gun3Group.add(frame);
 
-    gun3Group.position.set(18, 0, 0);
+    gun3Group.position.set(35, -5, 0);
 });
 
 // ================= CONTROLS =================
@@ -144,8 +144,8 @@ function animate(){
 
     // move full group
     if(gun3Group){
-        gun3Group.position.x = 18 + offsetX;
-        gun3Group.position.y = 0 + offsetY;
+        gun3Group.position.x = 35 + offsetX;
+        gun3Group.position.y = -5 + offsetY;
     }
 
     [gun1, gun2, gun3Group].forEach((gun, i)=>{
