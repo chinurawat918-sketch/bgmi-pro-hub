@@ -18,7 +18,7 @@ overflow:hidden;
 // Scene
 let scene = new THREE.Scene();
 
-// Camera (UPDATED)
+// Camera
 let camera = new THREE.PerspectiveCamera(
     75,
     window.innerWidth / window.innerHeight,
@@ -27,17 +27,34 @@ let camera = new THREE.PerspectiveCamera(
 );
 camera.position.z = 40;
 
-// Renderer (UPDATED)
+// ✅ CAMERA AUTO ADJUST (ADDED ONLY THIS)
+function adjustCamera() {
+    let aspect = window.innerWidth / window.innerHeight;
+    let baseAspect = 1600 / 900;
+
+    if (aspect < baseAspect) {
+        camera.position.z = 60; // mobile zoom out
+    } else {
+        camera.position.z = 40; // desktop original
+    }
+}
+
+// call once
+adjustCamera();
+
+// Renderer
 let renderer = new THREE.WebGLRenderer();
 renderer.setSize(window.innerWidth, window.innerHeight);
 renderer.setPixelRatio(window.devicePixelRatio);
 document.getElementById("box").appendChild(renderer.domElement);
 
-// 🔥 AUTO RESIZE (ADDED ONLY THIS)
+// Resize
 window.addEventListener("resize", () => {
     camera.aspect = window.innerWidth / window.innerHeight;
     camera.updateProjectionMatrix();
     renderer.setSize(window.innerWidth, window.innerHeight);
+
+    adjustCamera(); // ✅ added
 });
 
 // Light
@@ -130,7 +147,7 @@ window.addEventListener("mousemove", (e)=>{
     }
 });
 
-// 🔥 TOUCH SUPPORT
+// TOUCH
 let lastX = 0;
 let lastY = 0;
 
