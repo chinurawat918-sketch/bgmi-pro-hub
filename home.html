@@ -27,26 +27,14 @@ let camera = new THREE.PerspectiveCamera(
 );
 camera.position.z = 40;
 
-// ✅ CAMERA AUTO ADJUST (ADDED ONLY THIS)
-function adjustCamera() {
-    let aspect = window.innerWidth / window.innerHeight;
-    let baseAspect = 1600 / 900;
-
-    if (aspect < baseAspect) {
-        camera.position.z = 60; // mobile zoom out
-    } else {
-        camera.position.z = 40; // desktop original
-    }
-}
-
-// call once
-adjustCamera();
-
 // Renderer
 let renderer = new THREE.WebGLRenderer();
 renderer.setSize(window.innerWidth, window.innerHeight);
 renderer.setPixelRatio(window.devicePixelRatio);
 document.getElementById("box").appendChild(renderer.domElement);
+
+// ✅ screen factor (ADDED ONLY THIS)
+let screenFactor = Math.min(window.innerWidth / 1600, window.innerHeight / 900);
 
 // Resize
 window.addEventListener("resize", () => {
@@ -54,7 +42,8 @@ window.addEventListener("resize", () => {
     camera.updateProjectionMatrix();
     renderer.setSize(window.innerWidth, window.innerHeight);
 
-    adjustCamera(); // ✅ added
+    // update screenFactor on resize
+    screenFactor = Math.min(window.innerWidth / 1600, window.innerHeight / 900);
 });
 
 // Light
@@ -71,7 +60,7 @@ let gun1, gun2, gun3, gun3Group;
 new THREE.GLTFLoader().load('pubg_mobile_m4_glacier.glb', (gltf)=>{
     gun1 = gltf.scene;
     gun1.scale.set(35,35,35);
-    gun1.position.set(-40,15, 0);
+    gun1.position.set(-40 * screenFactor, 15 * screenFactor, 0); // ✅ updated
     gun1.rotation.set(0, Math.PI/2,0);
     scene.add(gun1);
 });
@@ -80,7 +69,7 @@ new THREE.GLTFLoader().load('pubg_mobile_m4_glacier.glb', (gltf)=>{
 new THREE.GLTFLoader().load('ump-45__aggressor.glb', (gltf)=>{
     gun2 = gltf.scene;
     gun2.scale.set(.8,.8,.8);
-    gun2.position.set(0, 20, 0);
+    gun2.position.set(0, 20 * screenFactor, 0); // ✅ updated
     gun2.rotation.set(0, Math.PI/2,0);
     scene.add(gun2);
 });
@@ -96,7 +85,7 @@ new THREE.GLTFLoader().load('awm_godzilla_animated_4k_textures.glb', (gltf)=>{
     gun3.rotation.set(0, Math.PI/2,0);
 
     gun3Group.add(gun3);
-    gun3Group.position.set(15,10, 0);
+    gun3Group.position.set(15 * screenFactor, 10 * screenFactor, 0); // ✅ updated
 });
 
 // ================= CONTROLS =================
@@ -191,8 +180,8 @@ function animate(){
     requestAnimationFrame(animate);
 
     if(gun3Group){
-        gun3Group.position.x = 35 + offsetX;
-        gun3Group.position.y = 0 + offsetY;
+        gun3Group.position.x = (35 * screenFactor) + offsetX; // ✅ updated
+        gun3Group.position.y = (0 * screenFactor) + offsetY;  // ✅ updated
     }
 
     [gun1, gun2, gun3Group].forEach((gun, i)=>{
