@@ -73,9 +73,9 @@ new THREE.GLTFLoader().load('awm_godzilla_animated_4k_textures.glb', (gltf)=>{
 new THREE.GLTFLoader().load('p90_hero_v1.glb', (gltf)=>{
     gun4 = gltf.scene;
 
-    gun4.scale.set(2,2,2); // adjust if needed
-    gun4.position.set(40,15, 0); // right side
-    gun4.rotation.set(0, Math.PI/2,0);
+    gun4.scale.set(.15,.15,.15); // adjust if needed
+    gun4.position.set(0,20, 0); // right side
+    gun4.rotation.set(0, Math.PI/6,0);
 
     scene.add(gun4);
 });
