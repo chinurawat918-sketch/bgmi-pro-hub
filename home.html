@@ -100,7 +100,7 @@ function addText(gun, text){
 // Gun 1
 new THREE.GLTFLoader().load('pubg_mobile_m4_glacier.glb', (gltf)=>{
     let gun = gltf.scene;
-    gun.scale.set(35,35,35);
+    gun.scale.set(100,100,100);
     gun.position.set(0,0,0);
     gun.rotation.set(0, Math.PI/2,0);
     addText(gun, "Damage +5%");
@@ -111,7 +111,7 @@ new THREE.GLTFLoader().load('pubg_mobile_m4_glacier.glb', (gltf)=>{
 // Gun 2
 new THREE.GLTFLoader().load('ump-45__aggressor.glb', (gltf)=>{
     let gun = gltf.scene;
-    gun.scale.set(.8,.8,.8);
+    gun.scale.set(10,10,10);
     gun.position.set(spacing,0,0);
     gun.rotation.set(0, Math.PI/2,0);
     addText(gun, "Damage -5%");
@@ -124,7 +124,7 @@ new THREE.GLTFLoader().load('awm_godzilla_animated_4k_textures.glb', (gltf)=>{
     let group = new THREE.Group();
     let gun = gltf.scene;
 
-    gun.scale.set(35,35,35);
+    gun.scale.set(60,60,60);
     gun.rotation.set(0, Math.PI/2,0);
 
     group.add(gun);
