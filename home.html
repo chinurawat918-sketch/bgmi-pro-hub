@@ -48,8 +48,8 @@ let gun1, gun2, gun3, gun3Group, gun4;
 // Gun 1
 new THREE.GLTFLoader().load('pubg_mobile_m4_glacier.glb', (gltf)=>{
     gun1 = gltf.scene;
-    gun1.scale.set(35,35,35);
-    gun1.position.set(-40,15, 0);
+    gun1.scale.set(50,50,50);
+    gun1.position.set(0,0, 0);
     gun1.rotation.set(0, Math.PI/2,0);
     scene.add(gun1);
 });
@@ -57,8 +57,8 @@ new THREE.GLTFLoader().load('pubg_mobile_m4_glacier.glb', (gltf)=>{
 // Gun 2
 new THREE.GLTFLoader().load('ump-45__aggressor.glb', (gltf)=>{
     gun2 = gltf.scene;
-    gun2.scale.set(.8,.8,.8);
-    gun2.position.set(0, 20, 0);
+    gun2.scale.set(1.2,1.2,1.2);
+    gun2.position.set(0, 0, 0);
     gun2.rotation.set(0, Math.PI/2,0);
     scene.add(gun2);
 });
@@ -70,19 +70,19 @@ new THREE.GLTFLoader().load('awm_godzilla_animated_4k_textures.glb', (gltf)=>{
     gun3Group = new THREE.Group();
     scene.add(gun3Group);
 
-    gun3.scale.set(35,35,35);
+    gun3.scale.set(40,40,40);
     gun3.rotation.set(0, Math.PI/2,0);
 
     gun3Group.add(gun3);
-    gun3Group.position.set(15,10, 0);
+    gun3Group.position.set(0,0,0);
 });
 
 // Gun 4
 new THREE.GLTFLoader().load('p90_hero_v1.glb', (gltf)=>{
     gun4 = gltf.scene;
 
-    gun4.scale.set(.15,.15,.15);
-    gun4.position.set(0,20, 0);
+    gun4.scale.set(.05,.05,.05);
+    gun4.position.set(0,0, 0);
     gun4.rotation.set(0, Math.PI/8,0);
 
     scene.add(gun4);
