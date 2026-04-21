@@ -1,217 +1,172 @@
-  <!DOCTYPE html>
+ <!DOCTYPE html>
 <html>
 <body style="margin:0; background:black; overflow:hidden;">
 
-<div id="box" style="position:absolute; top:0; left:0; width:100vw; height:100vh;"></div>
-
-<!-- AI BUTTON -->
-<button id="startAI" style="
-position:absolute;
-top:20px;
-right:20px;
-padding:10px 20px;
-font-size:16px;
-background:#00ffcc;
-border:none;
-border-radius:8px;
-cursor:pointer;
-z-index:10;
-">
-Start AI Mode
-</button>
-
-<!-- ⬅️➡️ BUTTONS -->
-<button id="leftBtn" style="position:absolute; left:20px; top:50%; font-size:30px; z-index:10;">⬅️</button>
-<button id="rightBtn" style="position:absolute; right:20px; top:50%; font-size:30px; z-index:10;">➡️</button>
-
-<!-- CAMERA -->
-<video id="video" autoplay muted playsinline style="
-position:absolute;
-right:20px;
-bottom:20px;
-width:220px;
-border:2px solid white;
-border-radius:10px;
-display:none;
-z-index:10;
-"></video>
-
-<div id="expression" style="
-position:absolute;
-right:20px;
-bottom:250px;
-color:white;
-font-size:18px;
-font-weight:bold;
-display:none;
-z-index:10;
-">
-Detecting...
+<!-- CONTROLS -->
+<div id="controls" style="position:absolute; bottom:10px; left:50%; transform:translateX(-50%); z-index:10;">
+  <button onclick="goSlide(0)">Gun 1</button>
+  <button onclick="goSlide(1)">Gun 2</button>
+  <button onclick="goSlide(2)">Gun 3</button>
+  <button onclick="goSlide(3)">Gun 4</button>
 </div>
+
+<!-- DAMAGE TEXT -->
+<div id="info" style="
+position:absolute;
+bottom:60px;
+left:50%;
+transform:translateX(-50%);
+color:white;
+font-size:24px;
+z-index:10;
+text-align:center;">
+Gun 1<br>Damage +5 🔥
+</div>
+
+<!-- RENDER AREA -->
+<div id="box" style="width:100vw; height:100vh;"></div>
 
 <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/build/three.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/GLTFLoader.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/face-api.js"></script>
 
 <script>
-// SCENE
+// Scene
 let scene = new THREE.Scene();
+
+// Camera
 let camera = new THREE.PerspectiveCamera(75, window.innerWidth/window.innerHeight, 0.1, 1000);
 camera.position.z = 40;
 
+// Renderer
 let renderer = new THREE.WebGLRenderer({antialias:true});
 renderer.setSize(window.innerWidth, window.innerHeight);
 document.getElementById("box").appendChild(renderer.domElement);
 
-// LIGHT
-scene.add(new THREE.AmbientLight(0xffffff,0.6));
-let glowLight = new THREE.PointLight(0x00ffcc, 2, 100);
-scene.add(glowLight);
+// Light
+scene.add(new THREE.AmbientLight(0xffffff,1));
 
-// SLIDER
-let sliderGroup = new THREE.Group();
-scene.add(sliderGroup);
+// Guns
+let gun1, gun2, gun3Group, gun4;
 
-let currentIndex = 0;
-let spacing = 35;
+// Gun 1
+new THREE.GLTFLoader().load('pubg_mobile_m4_glacier.glb', (gltf)=>{
+    gun1 = gltf.scene;
+    gun1.scale.set(35,35,35);
+    scene.add(gun1);
+    gun1.visible = true;
+});
 
-let guns = [];
+// Gun 2
+new THREE.GLTFLoader().load('ump-45__aggressor.glb', (gltf)=>{
+    gun2 = gltf.scene;
+    gun2.scale.set(.8,.8,.8);
+    scene.add(gun2);
+    gun2.visible = false;
+});
 
-function addText(gun, text){
-    let canvas = document.createElement("canvas");
-    let ctx = canvas.getContext("2d");
-    canvas.width = 512;
-    canvas.height = 128;
+// Gun 3
+new THREE.GLTFLoader().load('awm_godzilla_animated_4k_textures.glb', (gltf)=>{
+    let gun3 = gltf.scene;
+    gun3.scale.set(35,35,35);
 
-    ctx.fillStyle = "white";
-    ctx.font = "40px Arial";
-    ctx.textAlign = "center";
-    ctx.fillText(text, 256, 70);
+    gun3Group = new THREE.Group();
+    gun3Group.add(gun3);
+    scene.add(gun3Group);
 
-    let texture = new THREE.CanvasTexture(canvas);
-    let sprite = new THREE.Sprite(new THREE.SpriteMaterial({ map: texture }));
+    gun3Group.visible = false;
+});
 
-    sprite.scale.set(15,4,1);
-    sprite.position.set(0, -10, 0);
+// Gun 4
+new THREE.GLTFLoader().load('p90_hero_v1.glb', (gltf)=>{
+    gun4 = gltf.scene;
+    gun4.scale.set(.15,.15,.15);
+    scene.add(gun4);
+    gun4.visible = false;
+});
 
-    gun.add(sprite);
+// Slide Control
+let current = 0;
+
+function goSlide(i){
+    current = i;
+
+    if(gun1) gun1.visible = (i===0);
+    if(gun2) gun2.visible = (i===1);
+    if(gun3Group) gun3Group.visible = (i===2);
+    if(gun4) gun4.visible = (i===3);
+
+    let texts = [
+        "Gun 1<br>Damage +5 🔥",
+        "Gun 2<br>Damage -5 ❄️",
+        "Gun 3<br>Damage +5 ⚡",
+        "Gun 4<br>Damage -5 🧊"
+    ];
+
+    document.getElementById("info").innerHTML = texts[i];
 }
 
-// 🔫 Gun 1
-new THREE.GLTFLoader().load('pubg_mobile_m4_glacier.glb', (gltf)=>{
-    let gun = gltf.scene;
-    gun.scale.set(1000,1000,1000);
-    gun.position.set(0,0,0); // ✅ custom
-    gun.rotation.set(0, Math.PI/2,0);
-    addText(gun,"Damage +5%");
-    sliderGroup.add(gun);
-    guns[0]=gun;
+// Glow
+function addGlow(obj){
+    obj.traverse(child=>{
+        if(child.isMesh){
+            child.material.emissive = new THREE.Color(0x00ffff);
+            child.material.emissiveIntensity = 1.5;
+        }
+    });
+}
+
+function removeGlow(obj){
+    obj.traverse(child=>{
+        if(child.isMesh){
+            child.material.emissiveIntensity = 0;
+        }
+    });
+}
+
+// Click detection
+let raycaster = new THREE.Raycaster();
+let mouse = new THREE.Vector2();
+
+window.addEventListener("click", (e)=>{
+    mouse.x = (e.clientX / window.innerWidth) * 2 - 1;
+    mouse.y = -(e.clientY / window.innerHeight) * 2 + 1;
+
+    raycaster.setFromCamera(mouse, camera);
+
+    let guns = [gun1, gun2, gun3Group, gun4].filter(g=>g);
+
+    let intersects = raycaster.intersectObjects(guns, true);
+
+    if(intersects.length > 0){
+        let obj = intersects[0].object;
+
+        while(obj.parent && !guns.includes(obj)){
+            obj = obj.parent;
+        }
+
+        guns.forEach(g=>removeGlow(g));
+        addGlow(obj);
+    }
 });
 
-// 🔫 Gun 2
-new THREE.GLTFLoader().load('ump-45__aggressor.glb', (gltf)=>{
-    let gun = gltf.scene;
-    gun.scale.set(1.2,1.2,1.2);
-    gun.position.set(30,0,0); // ✅ custom
-    gun.rotation.set(0, Math.PI/2,0);
-    addText(gun,"Damage -5%");
-    sliderGroup.add(gun);
-    guns[1]=gun;
-});
-
-// 🔫 Gun 3
-new THREE.GLTFLoader().load('awm_godzilla_animated_4k_textures.glb', (gltf)=>{
-    let gun = gltf.scene;
-    gun.scale.set(60,60,60);
-    gun.position.set(60,0,0); // ✅ custom
-    gun.rotation.set(0, Math.PI/2,0);
-    addText(gun,"Damage +5%");
-    sliderGroup.add(gun);
-    guns[2]=gun;
-});
-
-// 🔫 Gun 4
-new THREE.GLTFLoader().load('p90_hero_v1.glb', (gltf)=>{
-    let gun = gltf.scene;
-    gun.scale.set(2,2,2);
-    gun.position.set(90,0,0); // ✅ custom
-    gun.rotation.set(0, Math.PI/2,0);
-    addText(gun,"Damage -5%");
-    sliderGroup.add(gun);
-    guns[3]=gun;
-});
-
-// BUTTONS
-document.getElementById("leftBtn").onclick=()=> currentIndex=Math.max(0,currentIndex-1);
-document.getElementById("rightBtn").onclick=()=> currentIndex=Math.min(3,currentIndex+1);
-
-// ANIMATION
+// Animate
 function animate(){
     requestAnimationFrame(animate);
 
-    let target=-currentIndex*spacing;
-    sliderGroup.position.x += (target-sliderGroup.position.x)*0.08;
-
-    guns.forEach((g,i)=>{
-        if(!g) return;
-
-        let center=(i===currentIndex);
-        let s=center?1.2:0.8;
-        g.scale.lerp(new THREE.Vector3(s,s,s),0.1);
-
-        if(center){
-            glowLight.position.copy(g.position.clone().add(sliderGroup.position));
-        }
-    });
+    if(gun1) gun1.rotation.y += 0.01;
+    if(gun2) gun2.rotation.y += 0.01;
+    if(gun3Group) gun3Group.rotation.y += 0.01;
+    if(gun4) gun4.rotation.y += 0.01;
 
     renderer.render(scene,camera);
 }
 animate();
 
-// AI
-const video=document.getElementById("video");
-const expText=document.getElementById("expression");
-
-document.getElementById("startAI").onclick=async()=>{
-    video.style.display="block";
-    expText.style.display="block";
-
-    await faceapi.nets.tinyFaceDetector.loadFromUri("https://justadudewhohacks.github.io/face-api.js/models");
-    await faceapi.nets.faceExpressionNet.loadFromUri("https://justadudewhohacks.github.io/face-api.js/models");
-
-    navigator.mediaDevices.getUserMedia({video:true})
-    .then(stream=>{
-        video.srcObject=stream;
-        video.play();
-    });
-};
-
-video.addEventListener("playing",()=>{
-    async function detect(){
-        const res=await faceapi.detectSingleFace(video,new faceapi.TinyFaceDetectorOptions()).withFaceExpressions();
-
-        if(res){
-            let exp=res.expressions;
-            let emotion=Object.keys(exp).reduce((a,b)=>exp[a]>exp[b]?a:b);
-
-            expText.innerText="Emotion: "+emotion;
-
-            if(emotion==="angry") currentIndex=0;
-            else if(emotion==="sad") currentIndex=1;
-            else if(emotion==="happy") currentIndex=2;
-            else currentIndex=3;
-        }
-
-        requestAnimationFrame(detect);
-    }
-    detect();
-});
-
-// RESIZE
-window.addEventListener("resize",()=>{
-    renderer.setSize(window.innerWidth,window.innerHeight);
-    camera.aspect=window.innerWidth/window.innerHeight;
+// Resize fix
+window.addEventListener("resize", ()=>{
+    camera.aspect = window.innerWidth/window.innerHeight;
     camera.updateProjectionMatrix();
+    renderer.setSize(window.innerWidth, window.innerHeight);
 });
 </script>
 
