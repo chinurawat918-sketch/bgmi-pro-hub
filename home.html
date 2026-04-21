@@ -100,7 +100,7 @@ function addText(gun, text){
 // 🔫 Gun 1
 new THREE.GLTFLoader().load('pubg_mobile_m4_glacier.glb', (gltf)=>{
     let gun = gltf.scene;
-    gun.scale.set(100,100,100);
+    gun.scale.set(1000,1000,1000);
     gun.position.set(0,0,0); // ✅ custom
     gun.rotation.set(0, Math.PI/2,0);
     addText(gun,"Damage +5%");
