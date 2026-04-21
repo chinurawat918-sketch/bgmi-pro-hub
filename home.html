@@ -1,22 +1,14 @@
-<!DOCTYPE html>
+  <!DOCTYPE html>
 <html>
-<body style="margin:0; background:black; overflow:hidden;">
+<body style="margin:0; background:black;">
 
-<!-- BUTTONS -->
-<div style="position:absolute; bottom:10px; left:50%; transform:translateX(-50%); z-index:10;">
-  <button onclick="showGun(1)">Gun 1</button>
-  <button onclick="showGun(2)">Gun 2</button>
-  <button onclick="showGun(3)">Gun 3</button>
-  <button onclick="showGun(4)">Gun 4</button>
-</div>
-
-<!-- DAMAGE TEXT -->
-<div id="info" style="position:absolute; bottom:60px; left:50%; transform:translateX(-50%); color:white; font-size:22px;">
-Gun 1 - Damage +5 🔥
-</div>
-
-<!-- RENDER -->
-<div id="box" style="position:absolute; top:0; left:0; width:100vw; height:100vh;"></div>
+<div id="box" style="
+position:absolute;
+top:0;
+left:0;
+width:1600px;
+height:900px; 
+"></div>
 
 <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/build/three.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/GLTFLoader.js"></script>
@@ -26,12 +18,12 @@ Gun 1 - Damage +5 🔥
 let scene = new THREE.Scene();
 
 // Camera
-let camera = new THREE.PerspectiveCamera(75, window.innerWidth/window.innerHeight, 0.1, 1000);
+let camera = new THREE.PerspectiveCamera(75, 1600/900, 0.1, 1000);
 camera.position.z = 40;
 
 // Renderer
 let renderer = new THREE.WebGLRenderer();
-renderer.setSize(window.innerWidth, window.innerHeight);
+renderer.setSize(1600, 900);
 document.getElementById("box").appendChild(renderer.domElement);
 
 // Light
@@ -45,97 +37,50 @@ let baseY4 = Math.PI/2,  baseX4 = 0;
 
 let gun1, gun2, gun3, gun3Group, gun4;
 
-// Gun 1
+// 🔫 Gun 1
 new THREE.GLTFLoader().load('pubg_mobile_m4_glacier.glb', (gltf)=>{
     gun1 = gltf.scene;
     gun1.scale.set(35,35,35);
-    gun1.position.set(0,0, 0);
+    gun1.position.set(-40,15, 0);
     gun1.rotation.set(0, Math.PI/2,0);
     scene.add(gun1);
 });
 
-// Gun 2
+// 🔫 Gun 2
 new THREE.GLTFLoader().load('ump-45__aggressor.glb', (gltf)=>{
     gun2 = gltf.scene;
-    gun2.scale.set(1.2,1.2,1.2);
-    gun2.position.set(0, 0, 0);
+    gun2.scale.set(.8,.8,.8);
+    gun2.position.set(0, 20, 0);
     gun2.rotation.set(0, Math.PI/2,0);
     scene.add(gun2);
 });
 
-// Gun 3
+// 🔫 Gun 3
 new THREE.GLTFLoader().load('awm_godzilla_animated_4k_textures.glb', (gltf)=>{
     gun3 = gltf.scene;
 
     gun3Group = new THREE.Group();
     scene.add(gun3Group);
 
-    gun3.scale.set(40,40,40);
+    gun3.scale.set(35,35,35);
     gun3.rotation.set(0, Math.PI/2,0);
 
     gun3Group.add(gun3);
-    gun3Group.position.set(0,0,0);
+    gun3Group.position.set(15,10, 0);
 });
 
-// Gun 4
+// 🔫 Gun 4 (NEW)
 new THREE.GLTFLoader().load('p90_hero_v1.glb', (gltf)=>{
     gun4 = gltf.scene;
 
-    gun4.scale.set(.05,.05,.05);
-    gun4.position.set(0,0, 0);
+    gun4.scale.set(.15,.15,.15); // adjust if needed
+    gun4.position.set(0,20, 0); // right side
     gun4.rotation.set(0, Math.PI/8,0);
 
     scene.add(gun4);
 });
 
-// ================= SLIDES (NEW) =================
-function showGun(n){
-
-    if(gun1) gun1.visible = false;
-    if(gun2) gun2.visible = false;
-    if(gun3Group) gun3Group.visible = false;
-    if(gun4) gun4.visible = false;
-
-    if(n === 1 && gun1){
-        gun1.visible = true;
-        document.getElementById("info").innerHTML = "Gun 1 - Damage +5 🔥";
-    }
-
-    if(n === 2 && gun2){
-        gun2.visible = true;
-        document.getElementById("info").innerHTML = "Gun 2 - Damage -5 ❄️";
-    }
-
-    if(n === 3 && gun3Group){
-        gun3Group.visible = true;
-        document.getElementById("info").innerHTML = "Gun 3 - Damage +5 ⚡";
-    }
-
-    if(n === 4 && gun4){
-        gun4.visible = true;
-        document.getElementById("info").innerHTML = "Gun 4 - Damage -5 🧊";
-    }
-}
-
-// ================= GLOW (NEW) =================
-function addGlow(object){
-    object.traverse((child)=>{
-        if(child.isMesh){
-            child.material.emissive = new THREE.Color(0x00ffff);
-            child.material.emissiveIntensity = 1.5;
-        }
-    });
-}
-
-function removeGlow(object){
-    object.traverse((child)=>{
-        if(child.isMesh){
-            child.material.emissiveIntensity = 0;
-        }
-    });
-}
-
-// ================= CONTROLS (YOUR ORIGINAL) =================
+// ================= CONTROLS =================
 let activeGun = null;
 let targetX = 0;
 let targetY = 0;
@@ -147,8 +92,10 @@ let raycaster = new THREE.Raycaster();
 let mouse = new THREE.Vector2();
 
 function selectGun(clientX, clientY){
-    mouse.x = (clientX / window.innerWidth) * 2 - 1;
-    mouse.y = -(clientY / window.innerHeight) * 2 + 1;
+    let rect = renderer.domElement.getBoundingClientRect();
+
+    mouse.x = ((clientX - rect.left) / rect.width) * 2 - 1;
+    mouse.y = -((clientY - rect.top) / rect.height) * 2 + 1;
 
     raycaster.setFromCamera(mouse, camera);
 
@@ -168,14 +115,6 @@ function selectGun(clientX, clientY){
 // Mouse
 window.addEventListener("mousedown", (e)=>{
     selectGun(e.clientX, e.clientY);
-
-    if(activeGun){
-        [gun1, gun2, gun3Group, gun4].forEach(g=>{
-            if(g) removeGlow(g);
-        });
-
-        addGlow(activeGun);
-    }
 });
 
 window.addEventListener("mouseup", ()=>{
@@ -189,7 +128,46 @@ window.addEventListener("mousemove", (e)=>{
     }
 });
 
-// ================= ANIMATION (UNCHANGED) =================
+// TOUCH
+let lastX = 0;
+let lastY = 0;
+
+window.addEventListener("touchstart", (e)=>{
+    let t = e.touches[0];
+    selectGun(t.clientX, t.clientY);
+
+    lastX = t.clientX;
+    lastY = t.clientY;
+});
+
+window.addEventListener("touchmove", (e)=>{
+    if(activeGun){
+        let t = e.touches[0];
+
+        let dx = t.clientX - lastX;
+        let dy = t.clientY - lastY;
+
+        targetX = dx * 0.01;
+        targetY = dy * 0.01;
+
+        lastX = t.clientX;
+        lastY = t.clientY;
+    }
+});
+
+window.addEventListener("touchend", ()=>{
+    activeGun = null;
+});
+
+// Arrow keys
+window.addEventListener("keydown", (e)=>{
+    if(e.key === "ArrowRight") offsetX += 0.5;
+    if(e.key === "ArrowLeft") offsetX -= 0.5;
+    if(e.key === "ArrowUp") offsetY += 0.5;
+    if(e.key === "ArrowDown") offsetY -= 0.5;
+});
+
+// ================= ANIMATION =================
 function animate(){
     requestAnimationFrame(animate);
 
@@ -216,13 +194,6 @@ function animate(){
     renderer.render(scene,camera);
 }
 animate();
-
-// Resize fix
-window.addEventListener("resize", ()=>{
-    camera.aspect = window.innerWidth/window.innerHeight;
-    camera.updateProjectionMatrix();
-    renderer.setSize(window.innerWidth, window.innerHeight);
-});
 </script>
 
 </body>
